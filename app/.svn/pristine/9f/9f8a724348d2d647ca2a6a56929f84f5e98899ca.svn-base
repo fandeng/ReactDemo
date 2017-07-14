@@ -1,0 +1,156 @@
+//拍照认证
+import React, { Component } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  PixelRatio,
+  TouchableOpacity,
+  InteractionManager,
+  Image,
+  Platform
+} from 'react-native';
+
+import ImagePicker from 'react-native-image-picker';
+import Common from '../common/common';
+import HeaderView from '../common/HeaderView';
+
+ class PhotographCertificateContainer extends Component {
+
+  state = {
+    avatarSource: null
+  };
+
+  selectPhotoTapped() {
+    const options = {
+      title: '', // 选择器的标题，可以设置为空来不显示标题
+      cancelButtonTitle: '取消',
+      takePhotoButtonTitle: '拍照', // 调取摄像头的按钮，可以设置为空使用户不可选择拍照
+      chooseFromLibraryButtonTitle: '从手机相册选择', // 调取相册的按钮，可以设置为空使用户不可选择相册照片
+      mediaType: 'photo',//类型
+      quality: 0.5,//质量
+      maxWidth: 100,// photos only默认为手机屏幕的宽，高与宽一样，为正方形照片
+      maxHeight: 100,
+      storageOptions: {
+        skipBackup: true
+      }
+    };
+
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled photo picker');
+      }
+      else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      }
+      else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      }
+      else {
+        var source;
+        if (Platform.OS === 'android') {
+          source = {uri: response.uri, isStatic: true};
+        } else {
+          source = {uri: response.uri.replace('file://', ''), isStatic: true};
+        }
+        this.setState({
+          avatarSource: source
+        });
+      }
+    });
+  }
+
+  render() {
+    return (
+      <View>
+      <HeaderView  titleView= {'拍照认证'}
+        leftIcon={'angle-left'}
+        leftIconAction={() => this.props.navigator.pop() }/>
+        {
+          <View style={styles.container}>
+        	  <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+         		 <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
+      				{ this.state.avatarSource === null ? <Text>Select a Photo</Text> :
+            			<Image style={styles.avatar} source={this.state.avatarSource} />
+         		    }
+          		 </View>
+        	  </TouchableOpacity>
+
+        	  <TouchableOpacity
+                 activeOpacity={0.5}
+                 onPress={()=>this._onPressFeedItem()}
+                 style={styles.center}>
+                 <View style = {styles.nextContainer_style}>
+                     <Text style={{color:'white',fontSize:15}}>下一步</Text>
+                 </View>
+             </TouchableOpacity>
+          </View>
+    	}
+      </View>
+    );
+  }
+   //添加联系人点击事件
+  _onPressFeedItem() {
+      InteractionManager.runAfterInteractions(() => {
+        let uri = "file:///Users/fandeng/Library/Developer/CoreSimulator/Devices/7A510737-4D75-447F-A20E-EFEFF088DC60/data/Containers/Data/Application/88F20342-2DE2-49F6-8B4F-806AE36E8C8D/Documents/68F6FBED-3994-4A7B-8092-5F8B1492C1EE.jpg";
+        let formData = new FormData();
+        let file = {uri: uri, type: 'multipart/form-data', name: 'a.jpg'};
+
+        formData.append("images",file);
+
+        let url = "http://112.74.205.50/babylove-web/upFile.servlet";
+        fetch(url,{
+            method:'POST',
+            headers:{
+                'Accept': 'text/html;charset=UTF-8',
+                'Content-Type':'multipart/form-data',
+                'fileName':'image.png',
+                'phonetype':'ios',
+                'fileType':'9001'
+            },
+            body:formData,
+        }) .then(
+            (response) => {
+                 alert(response.headers.map.attachmentid);
+             }
+            )
+            .catch((error)=>{console.error('error',error)});
+      });
+  }
+
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF'
+  },
+  avatarContainer: {
+    borderColor: '#9B9B9B',
+    borderWidth: 1 / PixelRatio.get(),
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  avatar: {
+  	marginTop:20,
+    borderRadius: 75,
+    width: 150,
+    height: 150
+  },
+  nextContainer_style:{
+    marginTop:20,
+    marginLeft:10,
+    marginRight:10,
+    backgroundColor:'#1a98ff',
+    height:40,
+    borderRadius:5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+module.exports = PhotographCertificateContainer;

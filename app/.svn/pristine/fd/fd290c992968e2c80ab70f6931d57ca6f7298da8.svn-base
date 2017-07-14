@@ -1,0 +1,45 @@
+/**
+ * Created by jason on 16/7/14.
+ */
+import React from 'react';
+import {
+    Navigator,
+    View,
+    StyleSheet,
+    Text,
+} from 'react-native';
+
+import TabBarView from '../containers/TabBarView';
+
+class App extends React.Component {
+    render() {
+
+        return (
+            <View style={{ flex: 1 }}>
+                <Navigator
+                    style={styles.container}
+                    initialRoute={{ name: 'TabBarView', component: TabBarView }}
+                    configureScene={(route) => {
+                        if (route.sceneConfig) {
+                            return route.sceneConfig;
+                        }
+                        return Navigator.SceneConfigs.FloatFromRight;
+                    } }
+                    renderScene={(route, navigator) => {
+                        let Component = route.component;
+                        return (
+                            <Component navigator = {navigator} route = {route} {...route.passProps} />
+                        )
+                    } }
+                    />
+            </View>
+        )
+    }
+}
+const styles = StyleSheet.create({
+   container: {
+    flex: 1,
+   },
+});
+
+export default App;

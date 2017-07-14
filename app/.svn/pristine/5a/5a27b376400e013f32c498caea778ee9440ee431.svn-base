@@ -1,0 +1,76 @@
+//个人信息界面
+import React, { Component } from 'react';
+import  {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Dimensions,
+  Alert,
+  InteractionManager,
+} from 'react-native';
+
+import Common from '../common/common';
+import HeaderView from '../common/HeaderView';
+import MineInformationContainer from '../components/MineInformation';
+
+import ResponseData from '../Data/Response.json';
+import REQUEST_JSON from '../Data/Request.json';
+var DataRepository = require('../Data/DataRepository');
+var repository = new DataRepository();
+import { toastShort } from '../utils/ToastUtil';
+
+class MineInformationVC extends Component {
+  state = {
+      name: []
+  }
+  _callback(dataArray) {
+    this.setState({
+        name: dataArray,
+    });
+  }
+  render() {
+    return (
+      <View>
+        <HeaderView  titleView= {'个人信息'}
+        leftIcon={'angle-left'}
+        leftIconAction={() => this.props.navigator.pop() }
+        rightButton={'确认'}
+        collectIconAction={() => this.onPressHandler()}/>
+        {
+          <ScrollView style={{backgroundColor:'#f0f1f2',height: Common.window.height-64,width:Common.window.width}}>
+             <MineInformationContainer  callback={this._callback.bind(this)}/>
+          </ScrollView>
+        }
+      </View>
+    );
+  }
+  onPressHandler = () => {
+      InteractionManager.runAfterInteractions(() => {
+          if (this.state.name[0] ==undefined) {
+            toastShort('请输入姓名');
+          } else if (this.state.name[1] ==undefined) {
+            toastShort('请输入身份证号');
+          } else if (this.state.name[2] ==undefined) {
+            toastShort('请输入地址');
+          } else {
+            this.request();
+          }
+      });
+  }
+  request() {
+      var modifyuserinfo = REQUEST_JSON.modifyuserinfo;
+      modifyuserinfo.userid = '123';
+      modifyuserinfo.name = this.state.name[0];
+      modifyuserinfo.identification = this.state.name[1];
+      modifyuserinfo.address = this.state.name[2];
+      repository.launchRequest('modifyuserinfo',modifyuserinfo).then((responseData) => {
+          alert(responseData.retinfo.retmsg)
+          this.props.navigator.pop()
+      }).done();
+  }
+}
+
+
+module.exports = MineInformationVC;

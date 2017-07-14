@@ -1,0 +1,59 @@
+//按钮点击
+import React, {
+    Component
+} from 'react';
+
+import  {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Platform,
+  TouchableHighlight,
+  ToastAndroid,
+} from 'react-native';
+import Common from '../common/common';
+import HeaderView from '../common/HeaderView';
+
+
+class MoreCustomButton extends React.Component {
+  render() {
+    return (
+      <TouchableHighlight
+        style={styles.button}
+        underlayColor="aqua"
+        onPress={this.props.onPress}>
+        <Text style={styles.buttonText}>{this.props.text}</Text>
+      </TouchableHighlight>
+    );
+  }
+}
+class ButtonStyleFD extends Component {
+  render() {
+    return (
+      <View>
+       <HeaderView  titleView= {'提示框实例'}
+       leftIcon={'angle-left'}
+       leftIconAction={() => this.props.navigator.pop() }/>
+       {
+          <MoreCustomButton
+             onPress={() => {
+               Platform.OS == 'ios'? console.log('你点击了我了~好疼！'):ToastAndroid.show('你点击了我了~好疼！', ToastAndroid.SHORT)
+           }}
+             text="请点击我~"
+           />
+       }
+      </View>
+    );
+  }
+}
+const styles = StyleSheet.create({
+  button: {
+    margin:5,
+    backgroundColor: 'darkgray',
+    padding: 15,
+    borderRadius:5,
+  }
+});
+
+module.exports = ButtonStyleFD;

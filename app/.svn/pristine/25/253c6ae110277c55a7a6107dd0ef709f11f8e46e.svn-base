@@ -1,0 +1,123 @@
+	import React,{Component} from 'react';
+	import{
+		StyleSheet,
+		Text,
+		View,
+		Image,
+		BackAndroid,
+		Platform,
+		TouchableOpacity,
+		ListView,
+		ScrollView,
+	} from 'react-native';
+
+import HeaderView from '../common/HeaderView';
+import Common from '../common/common';
+
+import REQUEST_JSON from '../Data/Request.json';
+
+import ChooseRepaymentWay from '../pages/ChooseRepaymentWay';
+
+var DataRepository = require('../Data/DataRepository');
+var repository = new DataRepository();
+var  Response =require('../Data/Response');
+
+var  classlist=[1,1,1,1,1,1,1,0,0,0,0,0,0];
+
+export default class RepaymentPlan extends Component{
+
+	constructor(props) {
+	  super(props);
+	
+	  this.state = {
+	  	isloaded:false,
+	  	dataSource:new ListView.DataSource({rowHasChanged:(r1,r2)=> row1 !== row2}),
+	  };
+	}
+
+	render(){
+		if (!this.state.isloaded) {
+			return (<View></View>)
+		}
+		return (<View>
+					<HeaderView
+			 		titleView= {'还款计划'}
+                    leftIcon={'angle-left'}
+                    leftIconAction={() => this.props.navigator.pop() }
+                    />
+                    <View style={{height:60,flexDirection:'row',alignItems:'center',justifyContent: 'center'}}>
+                    	<Text style={styles.text_style}>期数</Text>
+                    	<Text style={styles.text_style}>还款时间</Text>
+                    	<Text style={styles.text_style}>金额</Text>
+                    	<Text style={styles.text_style}>状态</Text>
+                    </View>
+					<ListView
+						dataSource={this.state.dataSource}
+						renderRow={this.renderData.bind(this)}
+						initialListSize={10}
+						style={{ height: Common.window.height-64-60,flex:1}}//减去导航的高度
+					/>
+				</View>
+			)
+	}
+
+	renderData(data,sectionID, rowID, highlightRow){
+
+		return (
+				<View >
+					<View style={{flex:1,backgroundColor:'#F0F1F2',height:20}}></View>
+					<TouchableOpacity style={{height:80,flexDirection:'row',alignItems:'center',justifyContent: 'center'}} onPress = {this.onClick.bind(this,data,ChooseRepaymentWay)}>
+						
+						<Text style={styles.text2_style}>{data.period_num}</Text>
+						
+						<Text style={styles.text2_style}>{data.repay_time}</Text>
+						<Text style={styles.text2_style}>{data.repay_amount}</Text>
+						<Text style={data.repay_status==1? styles.text_gray_style:styles.text_red_style}>{data.repay_status==1? '已还款':'未还款'}</Text>
+					</TouchableOpacity>
+				</View>
+				);
+	}
+
+	onClick(data,item){
+		if (data.repay_status==0) {
+			this.props.navigator.push({
+				name:'登陆',
+				component:item,
+
+			})
+		}
+	}
+
+	componentDidMount(){
+		
+		this.request();
+		 BackAndroid.addEventListener('hardwareBackPress', () => {
+    		this.props.navigator.pop()
+     		return true
+		});
+	}
+
+		 request() {
+        var queryinstallmentplan = REQUEST_JSON.queryinstallmentplan;
+        
+        // alert(page);
+        
+        repository.launchRequest('queryinstallmentplan',queryinstallmentplan).then((responseData) => {
+        	console.log('request  response======>'+responseData.response_body);
+            this.setState({
+            		isloaded:true,
+					dataSource:this.state.dataSource.cloneWithRows(responseData.response_body.period_list),
+				})
+        }).done();
+    }
+
+
+}
+
+var styles = StyleSheet.create({
+
+	text_style:{flex:1,textAlign:'center',fontSize:16},
+	text_red_style:{flex:1,textAlign:'center',fontSize:16,color:'#FF0000'},
+	text_gray_style:{flex:1,textAlign:'center',fontSize:16,color:'#999999'},
+	text2_style:{flex:1,textAlign:'center',fontSize:16,fontWeight:'bold'},
+});

@@ -1,0 +1,203 @@
+import React, { Component } from 'react';
+import {
+    StyleSheet,
+    Text,
+    Image,
+    ListView,
+    TouchableOpacity,
+    View,
+    InteractionManager,
+    Dimensions,
+    Platform,
+} from 'react-native';
+
+import Common from '../common/common';
+import HeaderView from '../common/HeaderView';
+
+import DeviceInfo from 'react-native-device-info';
+
+import ControlFD from '../pages/UIControl';
+
+
+var IMGLIST = [require("../img/bless.png"), require('../img/love.png'), require('../img/essay.png')];
+let classList = ['我的贷款', '我的资料', '设置'];
+
+class MineContainer extends Component {
+    constructor(props) {
+        super(props);
+        this._renderRow = this.renderRow.bind(this);
+        this.state = {
+          dataSource: new ListView.DataSource({
+              rowHasChanged: (row1, row2) => row1 !== row2,
+          }),
+        };
+    }
+    render() {
+        return (
+            <View style = {{backgroundColor: '#f0f1f2'}}>
+                  <ListView
+                      dataSource={this.state.dataSource.cloneWithRows(classList) }
+                      renderRow={this._renderRow}
+                      renderHeader={this._renderHeader}
+                      enableEmptySections={true}
+                      style={{ height: Common.window.height-49}}//减去导航的高度
+                  />
+
+            </View>
+        );
+    }
+    _renderHeader(){
+      return (
+        <View style = {styles.TopView_back}>
+           <View style = {styles.TopImage_back}>
+              <Image style = {styles.TopImage} source = {require('../img/love.png')}></Image>
+           </View>
+           <Text style = {styles.TopPhone_text}>手机号码</Text>
+           <Text style = {styles.TopName_text}>姓名</Text>
+           <View style = {styles.TopView_bottom}>
+              <View style={[styles.TopBottom_child,{marginLeft:10}]}>
+                 <Text style={styles.TopBottom_text}>申请贷款(笔)</Text>
+                 <Text style={styles.TopBottom_text}>2</Text>
+              </View>
+              <View style={{backgroundColor:'rgba(255.0, 255.0, 255.0, 0.5)',width:1,height:70}}/>
+              <View style={styles.TopBottom_child}>
+                 <Text style={styles.TopBottom_text}>需还贷款(笔)</Text>
+                 <Text style={styles.TopBottom_text}>2</Text>
+              </View>
+           </View>
+        </View>
+      );
+    }
+
+    renderRow(rowDate,sectionID: number | string, rowID: number | string,) {
+       let img = IMGLIST[rowID]
+        return (
+            <TouchableOpacity
+                activeOpacity={0.75}
+                onPress={this._onPressFeedItem.bind(this, rowDate, rowID) }
+                style={styles.center}
+            >
+            <View style = {styles.Rowcontainer}>
+                <Image style = {styles.RowImage_left} source = {img}></Image>
+                <Text style = {styles.RowTitle_text}>{rowDate}</Text>
+                <Image style = {styles.RowImage_right} source = {img}></Image>
+            </View>
+            </TouchableOpacity>
+        );
+    }
+
+    _onPressFeedItem(rowDate, rowID) {
+        InteractionManager.runAfterInteractions(() => {
+          if (rowID ==2) {
+            this.props.navigator.push({
+                name: 'UI组件',
+                component: ControlFD,
+            })
+          } else {
+            alert('待实现')
+          }
+        });
+    }
+    _onPressCall(){
+      InteractionManager.runAfterInteractions(() => {
+        alert('待实现')
+      });
+    }
+}
+
+const styles = StyleSheet.create({
+    center:{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    Rowcontainer: {
+      width: Common.window.width,
+      height:55,
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: 'white',
+      borderBottomColor: 'darkgray',
+      borderBottomWidth: 1,
+    },
+    RowImage_right: {
+     height: 15,
+     width: 15,
+    //  marginTop: 20,
+     marginRight: 10,
+    },
+    RowImage_left: {
+      height: 25,
+      width: 25,
+      // marginTop: 15,
+      marginLeft: 10,
+    },
+    RowTitle_text: {
+     textAlign: 'left',
+     fontSize: 14,
+     color: 'black',
+    //  marginTop:20,
+     marginLeft:10,
+     width:Common.window.width-70,
+    },
+    TopView_back:{
+      backgroundColor: 'rgba(26.0, 130.0, 255.0, 1.0)',
+      height: Platform.OS == 'ios'?260:240,
+      width: Common.window.width,
+    },
+    TopImage:{
+      height: 60,
+      width: 60,
+      marginTop: 0,
+      marginLeft: Common.window.width/2-30,
+      borderRadius:30,
+      borderColor:'white',
+      borderWidth:2,
+    },
+    TopPhone_text:{
+      textAlign: 'center',
+      fontSize: 14,
+      color: 'white',
+      marginTop:10,
+      marginLeft:20,
+      width:Common.window.width-40,
+      height:20,
+    },
+    TopName_text:{
+      textAlign: 'center',
+      fontSize: 14,
+      color: 'white',
+      marginTop:10,
+      marginLeft:20,
+      height:20,
+      width:Common.window.width-40,
+    },
+    TopView_bottom:{
+      backgroundColor: 'rgba(22.0, 114.0, 226.0, 1.0)',
+      marginTop:Platform.OS == 'ios'?10:10,
+      height:Platform.OS == 'ios'?90:90,
+      flexDirection: 'row',
+      alignItems: 'center'
+    },
+    TopBottom_child:{
+      backgroundColor:'rgba(22.0, 114.0, 226.0, 1.0)',
+      width:(Common.window.width-20)/2,
+      height:70,
+      alignItems: 'center'
+    },
+    TopBottom_text:{
+      color:'white',
+      fontSize: 14,
+      marginTop:15,
+      textAlign:'center',
+      width:(Common.window.width-20)/2,
+    },
+    TopImage_back:{
+     backgroundColor: 'rgba(26.0, 130.0, 255.0, 1.0)',
+     height: 60,
+     width: Common.window.width,
+     marginTop: Platform.OS == 'ios'?40:20,
+     flexDirection: 'row',
+   },
+});
+module.exports = MineContainer;

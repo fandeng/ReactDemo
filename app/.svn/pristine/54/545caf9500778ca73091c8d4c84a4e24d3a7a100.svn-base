@@ -1,0 +1,47 @@
+import React,{Component} from 'react';
+import {StyleSheet,
+	Text,
+	ListView,
+	View,
+	Image,
+	Platform,
+	ScrollView,
+	BackAndroid,
+	TouchableOpacity,
+	InteractionManager,
+} from 'react-native';
+
+
+import HeaderView from '../common/HeaderView';
+import Common from '../common/common';
+
+import REQUEST_JSON from '../Data/Request.json';
+var DataRepository = require('../Data/DataRepository');
+var repository = new DataRepository();
+
+export default class AboutUs extends Component{
+
+	render(){
+		return (<View>
+					<HeaderView
+			 		titleView= {'关于我们'}
+                    leftIcon={'angle-left'}
+                    leftIconAction={() => this.props.navigator.pop() }
+                    />
+                    <ScrollView style={{flexDirection:'column',height:Platform.OS == 'ios'? Common.window.height-64:Common.window.height - 50}}>
+						<Image style={{height:180,width:Common.window.width}} source={require('../img/emergencyContact.png')}>
+						</Image>
+						<View style={{flex:1,paddingLeft:10,paddingRight:10}}>
+							<Text style={{fontSize:18}}> 关于我们爱上大声的叫爱神看见俺手机打开手机打开静安寺拉萨到拉萨</Text>
+						</View>
+                    </ScrollView>
+				</View>
+			)
+	}
+
+}
+
+
+var styles =StyleSheet.create({
+	view_style:{flex:1,justifyContent: 'flex-end',flexDirection:'row',height:60,backgroundColor:'#ffffff'},
+});

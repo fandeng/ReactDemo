@@ -1,0 +1,65 @@
+import React,{Component} from 'react';
+import{
+	StyleSheet,
+	Text,
+	View,
+	BackAndroid,
+	Platform,
+	TouchableOpacity,
+	Image,
+TextInput,
+	ScrollView,
+} from 'react-native';
+
+import Common from '../common/common';
+
+
+export default class Login extends Component{
+
+	render(){
+
+		return (
+			
+				<View>
+					<View style={{height:240,justifyContent: 'center',alignItems: 'center'}}>
+						<Image style={{}} source={require('../img/emergencyContact.png')}>
+						</Image>
+					</View>
+					<View style={{height:180,justifyContent: 'flex-start',padding:10}}>
+							<TextInput
+					          style={styles.style_pwd_input}
+					          placeholder="Type"
+					           underlineColorAndroid={'transparent'} 
+					           numberOfLines={1}
+					          onChangeText={(text) => this.setState({text})}
+					        />
+
+							
+					</View>
+				</View>
+			)
+	}
+
+
+
+	
+}
+
+
+
+
+
+
+
+var styles =StyleSheet.create({
+	view_style:{flex:1,justifyContent: 'flex-end',flexDirection:'row',height:60},
+	input_style:{ marginTop: 10,
+    height: 40,
+    borderRadius: 5,
+   borderWidth: 1,
+    borderColor: 'lightblue'},
+     style_pwd_input:{  
+      backgroundColor:'#fff',
+      height:35,
+  },
+});

@@ -1,0 +1,429 @@
+{
+	"querydictionarydata": {
+		"response_body": {
+			"areacode": "440100",
+			"areaname": "广州市",
+			"areatype": "6",
+			"officialcode": "440100",
+			"parentcode": "1024"
+		},
+		"response_head": {
+			"process_code": "tranarea",
+			"resp_time": "2016-09-19 16:00:48",
+			"retinfo": {
+				"retcode": "0",
+				"retmsg": ""
+			}
+		}
+	},
+	"queryloanlist": {
+		"response_body": {
+			"order_list": [
+				{
+					"userid": "001",
+					"loan_amount": "8000.00",
+					"loan_term": "6",
+					"period": "1",
+					"verify_statue": "1",
+					"apply_time": "2016-05-15",
+					"verify_time": "2016-05-16",
+					"loan_time": "2016-05-16"
+				},
+				{
+					"userid": "001",
+					"loan_amount": "3000.00",
+					"loan_term": "6",
+					"period": "1",
+					"verify_statue": "0",
+					"apply_time": "2016-05-15",
+					"verify_time": "2016-05-16",
+					"loan_time": "2016-05-16"
+				},
+				{
+					"userid": "001",
+					"loan_amount": "4000.00",
+					"loan_term": "6",
+					"period": "1",
+					"verify_statue": "0",
+					"apply_time": "2016-05-15",
+					"verify_time": "2016-05-16",
+					"loan_time": "2016-05-16"
+				},
+				{
+					"userid": "001",
+					"loan_amount": "2000.00",
+					"loan_term": "6",
+					"period": "1",
+					"verify_statue": "1",
+					"apply_time": "2016-05-15",
+					"verify_time": "2016-05-16",
+					"loan_time": "2016-05-16"
+				}
+			]
+		},
+		"response_head": {
+			"process_code": "tranarea",
+			"resp_time": "2016-09-19 16:00:48",
+			"retinfo": {
+				"retcode": "0",
+				"retmsg": ""
+			}
+		}
+	},
+	"queryloandetail": {
+		"response_body": {
+			"userid": "",
+			"orderid": "0123456789",
+			"serialnumber": "",
+			"loan_amount": "2099.00",
+			"loan_term": "3",
+			"period": "1",
+			"verify_statue": "0",
+			"apply_time": "2016-09-27 10:20:20",
+			"verify_time": "",
+			"loan_time": "",
+			"reject_reason": "长得太帅，不给你贷款",
+			"name": "",
+			"age": "",
+			"gender": "",
+			"identification": "",
+			"address": "",
+			"employer": "",
+			"office_address": "",
+			"office_phone": "",
+			"bank": "",
+			"bank_card_num": "",
+			"emergency_contacts": [
+				{
+					"name": "",
+					"phone": "",
+					"address": "",
+					"relation": ""
+				}
+			]
+		},
+		"response_head": {
+			"process_code": "tranarea",
+			"resp_time": "2016-09-19 16:00:48",
+			"retinfo": {
+				"retcode": "0",
+				"retmsg": ""
+			}
+		}
+	},
+	"modifyuserinfo": {
+		"response_head": {
+			"process_code": "modifyuserinfo",
+			"resp_time": "2016-09-19 16:00:48",
+			"retinfo": {
+				"retcode": "0",
+				"retmsg": "成功"
+			}
+		}
+	},
+	"queryuserinfo": {
+		"response_body": {
+			"userid": "123",
+			"token": "tasdsad",
+			"servnum": "15988866666",
+			"nickname": "叶潇",
+			"name": "叶潇",
+			"gender": "男",
+			"identification": "415665445454544777",
+			"address": "广州市",
+			"employer": "",
+			"office_address": "",
+			"office_phone": "",
+			"bank_cards": [{
+				"bank_card_num":"6222255555",
+				"bank":"工商",
+				}],
+			"bank_card_num": "",
+			"emergency_contacts": [
+				{
+					"name": "紫陌",
+					"phone": "13566668888",
+					"address": "广州市",
+					"relation": "兄弟"
+
+				}
+
+			]
+
+		},
+		"response_head": {
+			"process_code": "queryuserinfo",
+			"resp_time": "2016-09-19 16:00:48",
+			"retinfo": {
+				"retcode": "0",
+				"retmsg": ""
+			}
+		}
+	},
+	"queryinstallmentplan": {
+		"response_body": {
+			"period_list": [
+				{
+					"period_id": "001",
+					"serialnumber": "456789",
+					"orderid": "12345678",
+					"userid": "001",
+					"period_num": "1",
+					"period_time": "1",
+					"repay_amount": "1024.00",
+					"repay_time": "2016-09-27",
+					"repay_status": "1"
+				},
+				{
+					"period_id": "001",
+					"serialnumber": "456789",
+					"orderid": "12345678",
+					"userid": "001",
+					"period_num": "2",
+					"period_time": "1",
+					"repay_amount": "1024.00",
+					"repay_time": "2016-09-27",
+					"repay_status": "1"
+				},
+				{
+					"period_id": "001",
+					"serialnumber": "456789",
+					"orderid": "12345678",
+					"userid": "001",
+					"period_num": "3",
+					"period_time": "1",
+					"repay_amount": "1024.00",
+					"repay_time": "2016-09-27",
+					"repay_status": "1"
+				},
+				{
+					"period_id": "001",
+					"serialnumber": "456789",
+					"orderid": "12345678",
+					"userid": "001",
+					"period_num": "4",
+					"period_time": "1",
+					"repay_amount": "1024.00",
+					"repay_time": "2016-09-27",
+					"repay_status": "1"
+				},
+				{
+					"period_id": "001",
+					"serialnumber": "456789",
+					"orderid": "12345678",
+					"userid": "001",
+					"period_num": "5",
+					"period_time": "1",
+					"repay_amount": "1024.00",
+					"repay_time": "2016-09-27",
+					"repay_status": "1"
+				},
+				{
+					"period_id": "001",
+					"serialnumber": "456789",
+					"orderid": "12345678",
+					"userid": "001",
+					"period_num": "6",
+					"period_time": "1",
+					"repay_amount": "1024.00",
+					"repay_time": "2016-09-27",
+					"repay_status": "1"
+				},
+				{
+					"period_id": "001",
+					"serialnumber": "456789",
+					"orderid": "12345678",
+					"userid": "001",
+					"period_num": "7",
+					"period_time": "1",
+					"repay_amount": "1024.00",
+					"repay_time": "2016-09-27",
+					"repay_status": "0"
+				}
+			]
+		},
+		"response_head": {
+			"process_code": "tranarea",
+			"resp_time": "2016-09-19 16:00:48",
+			"retinfo": {
+				"retcode": "0",
+				"retmsg": ""
+			}
+		}
+	},
+	"smsvalidatecode": {
+		"response_body": {
+			"validatecode": "",
+			"servnum": "13657171777"
+		},
+		"response_head": {
+			"process_code": "tranarea",
+			"resp_time": "2016-09-19 16:00:48",
+			"retinfo": {
+				"retcode": "0",
+				"retmsg": ""
+			}
+		}
+	},
+	"userregister": {
+		"response_body": {
+			"userid": "001",
+			"token": "",
+			"servnum": "",
+			"name": "张三",
+			"gender": "男",
+			"identification": "71717171",
+			"address": "长安街",
+			"employer": "办公厅",
+			"office_address": "长安街",
+			"office_phone": "123223423",
+			"bank_cards": [
+				{
+					"bank_card_num": "31001231231234",
+					"bank": "农业银行"
+				}
+			],
+			"emergency_contacts": [
+				{
+					"name": "李四",
+					"phone": "124234342",
+					"address": "短按街",
+					"relation": "亲人"
+
+				}
+			]
+
+		},
+		"response_head": {
+			"process_code": "tranarea",
+			"resp_time": "2016-09-19 16:00:48",
+			"retinfo": {
+				"retcode": "0",
+				"retmsg": ""
+			}
+		}
+	},
+  "userlogin":{"response_body":{"userid":"001",
+                                      "token":"",
+                                      "servnum":"",
+                                      "name":"张三",
+                                      "gender":"男",
+                                      "identification":"71717171",
+                                      "address":"长安街",
+                                      "employer":"办公厅",
+                                      "office_address":"长安街",
+                                      "office_phone":"123223423",
+                                      "bank_cards":[{"bank_card_num":"31001231231234","bank":"农业银行"}],
+                                      "emergency_contacts":[{"name":"李四","phone":"124234342","address":"短按街","relation":"亲人"}],
+                                    },
+              "response_head":{"process_code":"","resp_time":"","token":"","retinfo":{"retcode":"0", "retmsg":""}}},
+  "imagevalidatecode":{"response_body":{"width":"80","height":"25","imagebyte":"","imagetype":""}},
+  "queryloaninfo":{
+			"response_body": {
+					"cur_need_repay": "200",
+					"loan_total": "2000",
+					"no_repay_totla":"1000"
+			},
+			"response_head": {
+					"process_code": "queryloaninfo",
+					"resp_time": "2016-09-19 16:00:48",
+					"retinfo": {
+							"retcode": "0",
+							"retmsg": ""
+						}
+			}
+	},
+	"querysysmsgs":{
+			"response_body": {
+					"total": "3",
+					"pagenum": "1",
+					"msgs":[
+						  {"content":"因为信息不全，请补全信息下个月再申请", "time":"2016.9.15", "title":"你的借款审核未通过"},
+							{"content":"请及时查询资金是否到账", "time":"2016.1.15", "title":"你的借款审核通过"},
+							{"content":"你可以先填写资料借款，也可以直接借款", "time":"2016.1.14", "title":"恭喜你成功注册哗啦贷"}
+					]
+			},
+			"response_head": {
+					"process_code": "querysysmsgs",
+					"resp_time": "2016-09-19 16:00:48",
+					"retinfo": {
+							"retcode": "0",
+							"retmsg": ""
+						}
+			}
+	},
+	"queryloanproducts":{
+			"response_body": {
+					"total": "3",
+					"pagenum": "1",
+					"products":[
+							{"name":"应急借款",
+								"quota_max":"1000",
+								"quota_min":"100",
+								"term_max":"3",
+								"term_min":"1",
+								"summary":"极少资料，快速放款",
+								"cover":"../img/homebg1.png"
+							},
+							{"name":"小额借款",
+								"quota_max":"5000",
+								"quota_min":"1000",
+								"term_max":"6",
+								"term_min":"3",
+								"summary":"快速借款，月息最低",
+								"cover":"../img/homebg2.png"
+							},
+							{"name":"学费借款",
+								"quota_max":"10000",
+								"quota_min":"5000",
+								"term_max":"12",
+								"term_min":"6",
+								"summary":"学费贷款，助你圆梦",
+								"cover":"../img/homebg3.png"
+							},
+					]
+			},
+			"response_head": {
+					"process_code": "queryloanproducts",
+					"resp_time": "2016-09-19 16:00:48",
+					"retinfo": {
+							"retcode": "0",
+							"retmsg": ""
+						}
+			}
+	},
+	"querydiscoveryinfo":{
+			"response_body": {
+					"total": "3",
+					"pagenum": "1",
+					"discoverylist":[
+							{
+								"title":"不吹不黑，iPhone7深度评测！",
+								"summary":"随着苹果发布iPhone7，2016年的开帐幕，面对三星旗舰最近的大放异彩，iPhone确实黯然失色不少了",
+								"cover":"../img/swiper_2.jpg",
+								"serviceurl":"http://www.xiaodatech.com/fh-web/article/discovery?discoveryId=116",
+							},
+							{
+								"title":"不吹不黑，iPhone7深度评测！",
+								"summary":"随着苹果发布iPhone7，2016年的开帐幕，面对三星旗舰最近的大放异彩，iPhone确实黯然失色不少了",
+								"cover":"../img/swiper_1.jpg",
+								"serviceurl":"http://www.xiaodatech.com/fh-web/article/discovery?discoveryId=116",
+							},
+							{
+								"title":"不吹不黑，iPhone7深度评测！",
+								"summary":"随着苹果发布iPhone7，2016年的开帐幕，面对三星旗舰最近的大放异彩，iPhone确实黯然失色不少了",
+								"cover":"../img/swiper_3.jpg",
+								"serviceurl":"http://www.xiaodatech.com/fh-web/article/discovery?discoveryId=116",
+							},
+					]
+			},
+			"response_head": {
+					"process_code": "querydiscoveryinfo",
+					"resp_time": "2016-09-19 16:00:48",
+					"retinfo": {
+							"retcode": "0",
+							"retmsg": ""
+						}
+			}
+	},
+}

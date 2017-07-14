@@ -1,0 +1,62 @@
+//提示框
+import React, {
+    Component
+} from 'react';
+import {
+    StyleSheet,
+    Text,
+    ScrollView,
+    View,
+    Alert,
+    Platform,
+    ToastAndroid,
+    TouchableHighlight,
+} from 'react-native';
+
+import Common from '../common/common';
+import HeaderView from '../common/HeaderView';
+
+class CustomButton extends React.Component {
+  render() {
+    return (
+      <TouchableHighlight
+        style={styles.button}
+        underlayColor="#a5a5a5"
+        onPress={this.props.onPress}>
+        <Text style={styles.buttonText}>{this.props.text}</Text>
+      </TouchableHighlight>
+    );
+  }
+}
+class AlertStyleFD extends Component {
+  render() {
+      return(
+         <View>
+          <HeaderView  titleView= {'提示框实例'}
+          leftIcon={'angle-left'}
+          leftIconAction={() => this.props.navigator.pop() }/>
+          {
+            <ScrollView style = {{width:Common.window.width,height:Common.window.height-64}}>
+              <CustomButton text='点击弹出默认Alert' onPress={()=>Alert.alert('温馨提醒','想点我吗？')} />
+
+              <CustomButton text='点击弹出两个按钮的Alert'
+                    onPress={()=>Alert.alert('温馨提醒','想点我吗？',[
+                      {text:'取消',onPress:()=>Platform.OS == 'ios'? console.log('点击了取消'):ToastAndroid.show('你点击了取消！', ToastAndroid.SHORT)},
+                      {text:'确定',onPress:()=>Platform.OS == 'ios'? console.log('点击了确定'):ToastAndroid.show('你点击了确定！', ToastAndroid.SHORT)}
+              ])}/>
+            </ScrollView>
+          }
+         </View>
+    );
+  }
+}
+const styles = StyleSheet.create({
+  button: {
+    margin:5,
+    backgroundColor: 'white',
+    padding: 15,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#cdcdcd',
+  }
+});
+module.exports = AlertStyleFD;

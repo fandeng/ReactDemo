@@ -1,0 +1,189 @@
+//首页
+import React, { Component} from 'react';
+import {
+    StyleSheet,
+    Text,
+    ScrollView,
+    View,
+    Image,
+    Alert,
+    Platform,
+    InteractionManager,
+    Dimensions,
+    TouchableOpacity,
+} from 'react-native';
+
+import Common from '../common/common';
+import HeaderView from '../common/HeaderView';
+import Swiper from 'react-native-swiper';
+//轮播图片
+var sliderImgs = [
+    require("../img/swiper1.png"),
+    require("../img/swiper2.jpg"),
+    require("../img/swiper3.jpg")
+];
+
+class HomePage extends Component {
+  render() {
+      return(
+         <View>
+          <HeaderView  titleView= {'哗啦贷'}
+          rightButton={'消息'}
+          collectIconAction={() => this.onPressApply() }/>
+          {
+            <ScrollView style = {{width:Common.window.width,height:Common.window.height-64,backgroundColor:'#f0f1f2'}}>
+              <View style={styles.topView_style}>
+                  <Swiper autoplay={true} height={(Common.window.height-64)/3-10} width={Common.window.width}
+                  onTouchStartCapture={this._onMomentumScrollEnd}
+                  dot={<View style={styles.dot_style} />}
+                  activeDot={<View style={styles.aDot_style} />}
+                  paginationStyle={{bottom: 5, left: Common.window.width/2,right:Common.window.width/2}}>
+                    <Image style={[styles.swiperImage_style]} source={sliderImgs[0]}></Image>
+                    <Image style={[styles.swiperImage_style]} source={sliderImgs[1]}></Image>
+                    <Image style={[styles.swiperImage_style]} source={sliderImgs[2]}></Image>
+                  </Swiper>
+                  <View style={styles.notice_style}>
+                      <Image style={styles.noticeImg_style} source={require("../img/notice.png")}/>
+                      <Text style={styles.notice_text}>哗啦贷有各种贷款，欢迎来借贷</Text>
+                  </View>
+              </View>
+
+              <View style={styles.midView_style}>
+                 <TouchableOpacity style={styles.center}
+                 activeOpacity={0.5}
+								 onPress = {() => this.onClickMidItems(0)}>
+                    <View style={styles.midView_child}>
+                       <Image style = {styles.midView_image} source={require('../img/swiper1.png')}/>
+                       <Text style={styles.midView_text}>现在分期</Text>
+                    </View>
+							   </TouchableOpacity>
+
+                 <TouchableOpacity style={styles.center}
+                 activeOpacity={0.5}
+								 onPress = {() => this.onClickMidItems(1)}>
+                     <View style={styles.midView_child}>
+                       <Image style = {styles.midView_image} source={require('../img/swiper2.jpg')}/>
+                       <Text style={styles.midView_text}>账单分期</Text>
+                     </View>
+							   </TouchableOpacity>
+
+                 <TouchableOpacity style={styles.center}
+                 activeOpacity={0.5}
+								 onPress = {() => this.onClickMidItems(2)}>
+                     <View style={styles.midView_child}>
+                       <Image style = {styles.midView_image} source={require('../img/swiper3.jpg')}/>
+                       <Text style={styles.midView_text}>还款</Text>
+                     </View>
+							   </TouchableOpacity>
+              </View>
+
+            </ScrollView>
+          }
+         </View>
+    );
+  }
+  onPressApply() {
+      InteractionManager.runAfterInteractions(() => {
+          alert('点击了消息中心')
+          // this.props.navigator.push({
+          //     name: '流程',
+          //     component: ApplyVC,
+          // })
+
+      });
+  }
+  _onMomentumScrollEnd(e, state, context) {
+    InteractionManager.runAfterInteractions(() => {
+        alert('点击了第'+state.index+'张图片')
+        // this.props.navigator.push({
+        //     name: '流程',
+        //     component: ApplyVC,
+        // })
+    });
+  }
+  onClickMidItems(index){
+    InteractionManager.runAfterInteractions(() => {
+        alert('点击了第'+index+'个')
+    });
+  }
+}
+const styles = StyleSheet.create({
+    topView_style:{
+      width:Common.window.width,
+      height:(Common.window.height-64)/3+30,
+      backgroundColor:'white'
+    },
+    swiperImage_style: {
+      height:(Common.window.height-64)/3,
+      width:Common.window.width
+    },
+    dot_style:{
+      backgroundColor:'#999999',
+      width: 6,
+      height: 6,
+      borderRadius: 3,
+      marginLeft: 3,
+      marginRight: 3,
+      marginTop: 3,
+    },
+    aDot_style:{
+      backgroundColor: 'white',
+      width: 8,
+      height: 8,
+      borderRadius: 4,
+      marginLeft: 3,
+      marginRight: 3,
+      marginTop: 3,
+    },
+    notice_style:{
+      width:Common.window.width,
+      height:40,
+      flexDirection: 'row',
+      alignItems: 'center'
+    },
+    noticeImg_style:{
+      width:22,
+      height:20,
+      marginLeft:10,
+    },
+    notice_text:{
+      textAlign:'left',
+      height:18,
+      marginTop:2,
+      marginLeft:10,
+      fontSize:14,
+      color:'#666666'
+    },
+    midView_style:{
+      width:Common.window.width-20,
+      height:100,
+      marginLeft:10,
+      marginTop:10,
+      flexDirection:'row',
+      justifyContent:'space-around',
+      alignItems:'center'
+    },
+    midView_child:{
+      width:90,
+      height:90,
+      alignItems:'center',
+      backgroundColor:'white'
+    },
+    center:{
+       flexDirection: 'row',
+       justifyContent: 'center',
+       alignItems: 'center',
+    },
+    midView_text:{
+      fontSize:14,
+      marginTop:10,
+      color:'#666666',
+      textAlign:'center'
+    },
+    midView_image:{
+      width:50,
+      height:50,
+      marginTop:10
+    },
+});
+module.exports = HomePage;

@@ -1,0 +1,126 @@
+//紧急联系人
+'use strict'
+import React, { Component } from 'react';
+import {
+    StyleSheet,
+    Text,
+    TextInput,
+    ScrollView,
+    View,
+    Dimensions,
+    Platform,
+    TouchableOpacity,
+    InteractionManager,
+    Alert,
+} from 'react-native';
+
+import Common from '../common/common';
+import HeaderView from '../common/HeaderView';
+
+class EmergencyContactContainer extends Component {
+    render() {
+        return (
+          <View>
+            <HeaderView  titleView= {'紧急联系人'}
+            leftIcon={'angle-left'}
+            leftIconAction={() => this.props.navigator.pop() }
+            rightButton={'确认'}
+            collectIconAction={() => this.props.navigator.pop()}/>
+            {
+              <ScrollView style={{backgroundColor:'#f0f1f2', height: Common.window.height-64,width:Common.window.width}}>
+                  <View style={{height:55,alignItems: 'center'}}>
+                       <Text style={styles.title_promte}>哗啦贷不会向联系人泄露您的借款信息，请放心填写</Text>
+                  </View>
+                  <View style={{height:55,alignItems: 'center',flexDirection: 'row',backgroundColor:'white'}}>
+                        <Text style={styles.title_content}>姓名</Text>
+                        <TextInput
+                          style={styles.name_input}
+                          placeholder='姓名'
+                          numberOfLines={1}
+                          autoFocus={true}
+                          textAlign='right'
+                        />
+                  </View>
+                  <View style={{height:1,backgroundColor:'white'}}>
+                        <View style={{height:1,backgroundColor:'#f4f4f4',marginLeft:10,width:Common.window.width-10}}/>
+                  </View>
+                  <View style={{height:55,alignItems: 'center',flexDirection: 'row',backgroundColor:'white'}}>
+                        <Text style={styles.title_content}>姓名</Text>
+                        <TextInput
+                          style={styles.phone_input}
+                          placeholder='手机号码'
+                          numberOfLines={1}
+                          autoFocus={true}
+                          textAlign='right'
+                          maxLength={11}
+                          keyboardType='numeric'
+                        />
+                  </View>
+                  <TouchableOpacity
+                      activeOpacity={0.5}
+                      onPress={()=>this._onPressFeedItem()}
+                      style={styles.center}>
+                      <View style = {styles.addContainer_style}>
+                          <Text style={{color:'white',fontSize:15}}>添加联系人</Text>
+                      </View>
+                  </TouchableOpacity>
+
+              </ScrollView>
+            }
+          </View>
+      );
+    }
+    //添加联系人点击事件
+    _onPressFeedItem() {
+        InteractionManager.runAfterInteractions(() => {
+              Alert.alert('温馨提示','待实现')
+        });
+    }
+}
+
+const styles = StyleSheet.create({
+    title_promte:{
+      marginTop:20,
+      height:20,
+      textAlign: 'center',
+      fontSize: 13,
+      color: '#999999',
+    },
+    title_content:{
+      marginLeft:10,
+      height:20,
+      marginTop:8,
+      width:80,
+      textAlign: 'left',
+      fontSize: 14,
+      color: '#333333',
+    },
+    name_input:{
+      marginLeft:10,
+      marginTop:5,
+      fontSize:14,
+      width:Common.window.width-110,
+      height:45,
+      color:'#666666'
+    },
+    phone_input:{
+      marginLeft:10,
+      marginTop:5,
+      fontSize:14,
+      width:Common.window.width-110,
+      height:45,
+      color:'#666666'
+    },
+    addContainer_style:{
+      marginTop:20,
+      marginLeft:10,
+      marginRight:10,
+      backgroundColor:'#1a98ff',
+      height:40,
+      borderRadius:5,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+});
+
+module.exports = EmergencyContactContainer;

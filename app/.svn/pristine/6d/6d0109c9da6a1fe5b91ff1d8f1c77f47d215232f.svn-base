@@ -1,0 +1,157 @@
+//申请个人信息界面
+import React, { Component } from 'react';
+import  {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Dimensions,
+  TouchableOpacity,
+  InteractionManager,
+} from 'react-native';
+
+import Common from '../common/common';
+import HeaderView from '../common/HeaderView';
+import ApplyEmergencyContactContainer from '../pages/ApplyEmergencyContact'
+import InformationProgressContainer from '../components/InformationProgress'
+import MineInformationContainer from '../components/MineInformation'
+import ResponseData from '../Data/Response.json';
+import REQUEST_JSON from '../Data/Request.json';
+var DataRepository = require('../Data/DataRepository');
+var repository = new DataRepository();
+import { toastShort } from '../utils/ToastUtil';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter'
+
+class ApplyMineInformationContainer extends Component {
+  state = {
+      data: [],
+      keyboardHeight: 0,
+  }
+  _callback(dataArray) {
+    this.setState({
+        data: dataArray,
+    });
+  }
+  render() {
+    return (
+      <View>
+        <HeaderView  titleView= {'个人信息'}
+        leftIcon={'angle-left'}
+        leftIconAction={() => this.props.navigator.pop() }/>
+        {
+          <ScrollView style={{backgroundColor:'#f0f1f2', height: Common.window.height-64,width:Common.window.width}}
+           keyboardDismissMode = 'interactive' contentOffset={{x:0,y:this.state.keyboardHeight}}>
+             <InformationProgressContainer numSign = {1} image = {['0','0','0','0']} progressArray={['个人信息','紧急联系人', '拍照认证','添加银行卡']}/>
+             <MineInformationContainer callback={this._callback.bind(this)} isApply={true}/>
+             <TouchableOpacity
+                 activeOpacity={0.5}
+                 onPress={()=>this._onPressFeedItem()}
+                 style={styles.center}>
+                 <View style = {styles.nextContainer_style}>
+                     <Text style={{color:'white',fontSize:15}}>下一步</Text>
+                 </View>
+             </TouchableOpacity>
+             <View style={{height:30}}/>
+          </ScrollView>
+        }
+      </View>
+    );
+  }
+  //监听键盘高度
+  componentDidMount() {
+      this.isFisrt = RCTDeviceEventEmitter.addListener('isFirst',(value)=>{
+        this.setState({keyboardHeight: value})
+      });
+      this.cancalFirst = RCTDeviceEventEmitter.addListener('cancalFirst',(value)=>{
+          this.setState({keyboardHeight:value})
+      });
+  }
+  componentWillUnmount() {
+　　  // TODO: figure out if removeAllListeners is the right thing to do
+     this.isFisrt.remove('isFirst');
+     this.cancalFirst.remove('cancalFirst');
+  }
+  //添加联系人点击事件
+  _onPressFeedItem() {
+      InteractionManager.runAfterInteractions(() => {
+        InteractionManager.runAfterInteractions(() => {
+            if (this.state.data[0] ==undefined) {
+              toastShort('请输入姓名');
+            } else if (this.isName(this.state.data[0])) {
+              toastShort('姓名只能输入2~20个中文');
+            } else if (this.state.data[1] ==undefined) {
+              toastShort('请输入身份证号');
+            } else if (this.isCardNum(this.state.data[1])) {
+                  toastShort('请输入正确的身份号码');
+            } else if (this.state.data[2] ==undefined) {
+              toastShort('请输入地址');
+            } else if (this.state.data[3] ==undefined) {
+              toastShort('请输入工作单位');
+            } else if (this.isWork(this.state.data[3])) {
+              toastShort('工作单位名称20个以内');
+            } else if (this.state.data[4] ==undefined) {
+              toastShort('请输入办公电话');
+            } else if (this.isWorkPhoneNum(this.state.data[4])) {
+              toastShort('请输入正确的电话号码');
+            } else if (this.state.data[5] ==undefined) {
+              toastShort('请输入办公地址');
+            } else {
+              this.request();
+            }
+        });
+      });
+  }
+  request() {
+      var modifyuserinfo = REQUEST_JSON.modifyuserinfo;
+      modifyuserinfo.userid = '123';
+      modifyuserinfo.name = this.state.data[0];
+      modifyuserinfo.identification = this.state.data[1];
+      modifyuserinfo.address = this.state.data[2];
+      modifyuserinfo.employer = this.state.data[3];
+      modifyuserinfo.office_phone = this.state.data[4];
+      modifyuserinfo.office_address = this.state.data[5];
+      repository.launchRequest('modifyuserinfo',modifyuserinfo).then((responseData) => {
+          this.props.navigator.push({
+              name: '紧急联系人',
+              component: ApplyEmergencyContactContainer,
+          })
+      }).done();
+  }
+  isName(str){
+    var regu='^[\\u4e00-\\u9fa5]{2,20}$';
+    var re = new RegExp(regu);
+    return !re.test(str);
+  }
+  isCardNum(str){
+    var regu='^(\\d{15,15}|\\d{18,18}|\\d{17}(\\d|X|x))$';
+    var re = new RegExp(regu);
+    return !re.test(str);
+  }
+  isWork(str){
+    if (str.lendth <=20) {
+      return true;
+    }
+    return false;
+  }
+  isWorkPhoneNum(str){
+    var regu='[0]{1}[0-9]{2,3}[0-9]{7,8}';
+    var re = new RegExp(regu);
+    return !re.test(str);
+  }
+
+}
+const styles = StyleSheet.create({
+  nextContainer_style:{
+    marginTop:20,
+    marginLeft:10,
+    marginRight:10,
+    backgroundColor:'#1a98ff',
+    height:40,
+    borderRadius:5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+module.exports = ApplyMineInformationContainer;

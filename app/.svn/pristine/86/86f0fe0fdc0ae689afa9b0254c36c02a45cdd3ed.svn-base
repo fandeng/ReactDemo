@@ -1,0 +1,32 @@
+//提示框
+import React, {
+    Component
+} from 'react';
+import {
+    StyleSheet,
+    Text,
+    ScrollView,
+    View,
+} from 'react-native';
+
+import Common from '../common/common';
+import HeaderView from '../common/HeaderView';
+
+class AlertStyleFD extends Component {
+  render() {
+      return(
+        <View>
+          <HeaderView  titleView= {'提示框'}
+          leftIcon={'angle-left'}
+          leftIconAction={() => this.props.navigator.pop() }/>
+          {
+            <ScrollView>
+              <Text style={{fontSize:96}}>Scroll me plz</Text>
+            </ScrollView>
+          }
+        </View>
+    );
+  }
+}
+
+module.exports = AlertStyleFD;

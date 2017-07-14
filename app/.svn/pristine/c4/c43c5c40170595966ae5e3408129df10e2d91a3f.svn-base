@@ -1,0 +1,21 @@
+
+
+import React from 'react';
+import {connect} from 'react-redux';
+import ControlFD from '../pages/UIControl';
+
+class DemoContainers extends React.Component {
+    render() {
+        return (
+            <ControlFD {...this.props} />
+        )
+    }
+}
+
+export default connect((state) => {
+
+    const { ControlFD } = state;
+    return {
+        ControlFD
+    }
+})(DemoContainers);

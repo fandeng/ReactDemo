@@ -1,0 +1,47 @@
+//选择器
+'use strict';
+import React, { Component } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Picker,
+} from 'react-native';
+var FIRSTNAMES  = ['公司名称', '公司电话','公司地址','详细地址'];
+
+class PickerContainer extends Component {
+    state =  {
+      language: '',
+    };
+    renderItems(data){
+  		return data.map(function(items,i){
+  			return (
+          <Picker.Item key={i} label={items} value={items} />
+  			)
+  		});
+  	}
+    render() {
+        return (
+          <View style={styles.container}>
+            <Picker
+            mode={'dialog'}
+            style={{width:200}}
+            selectedValue={this.state.language}
+             onValueChange={(value) => this.setState({language: value})}>
+                {this.renderItems(FIRSTNAMES)}
+            </Picker>
+          </View>
+       );
+    }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f0f1f2',
+  },
+});
+
+module.exports = PickerContainer;

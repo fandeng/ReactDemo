@@ -1,0 +1,71 @@
+//申请拍照界面
+import React, { Component } from 'react';
+import  {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Dimensions,
+  TouchableOpacity,
+  InteractionManager,
+  Alert,
+  Image,
+} from 'react-native';
+
+import Common from '../common/common';
+import HeaderView from '../common/HeaderView';
+import ApplyEmergencyContactContainer from '../pages/ApplyEmergencyContact'
+
+import InformationProgressContainer from '../components/InformationProgress'
+import PhotographCertificateContainer from'../components/PhotographCertificate';
+
+
+class ApplyPhotographCertificateContainer extends Component {
+  render() {
+    return (
+      <View>
+        <HeaderView  titleView= {'拍照认证'}
+        leftIcon={'angle-left'}
+        leftIconAction={() => this.props.navigator.pop() }/>
+        {
+          <ScrollView style={{height: Common.window.height-64,width:Common.window.width}}>
+             <InformationProgressContainer image = {require("../img/progress_two.png")} progressArray={['个人信息',"单位信息",' 拍照认证','紧急联系人']}/>
+             <PhotographCertificateContainer/>
+             <TouchableOpacity
+                 activeOpacity={0.5}
+                 onPress={()=>this._onPressFeedItem()}
+                 style={styles.center}>
+                 <View style = {styles.nextContainer_style}>
+                     <Text style={{color:'white',fontSize:15}}>下一步</Text>
+                 </View>
+             </TouchableOpacity>
+          </ScrollView>
+        }
+      </View>
+    );
+  }
+  //添加联系人点击事件
+  _onPressFeedItem() {
+      InteractionManager.runAfterInteractions(() => {
+        this.props.navigator.push({
+            name: '紧急联系人',
+            component: ApplyEmergencyContactContainer,
+        })
+      });
+  }
+}
+const styles = StyleSheet.create({
+  nextContainer_style:{
+    marginTop:20,
+    marginLeft:10,
+    marginRight:10,
+    backgroundColor:'#1a98ff',
+    height:40,
+    borderRadius:5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+module.exports = ApplyPhotographCertificateContainer;

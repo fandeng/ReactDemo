@@ -1,0 +1,107 @@
+//发现界面
+import React, {
+    Component
+} from 'react';
+import {
+    StyleSheet,
+    Text,
+    Image,
+    ListView,
+    TouchableOpacity,
+    View,
+    InteractionManager,
+    Dimensions,
+    TextInput,
+    Platform,
+} from 'react-native';
+
+import Common from '../common/common';
+import HeaderView from '../common/HeaderView';
+
+
+class FindPage extends Component {
+  constructor(props) {
+      super(props);
+      this._renderRow = this.renderRow.bind(this);
+      this.state = {
+        dataSource: new ListView.DataSource({
+            rowHasChanged: (row1, row2) => row1 !== row2,
+        }),
+      };
+  }
+    render() {
+      let classList = ['产品一', '产品二', '产品三'];
+        return (
+          <View>
+            <HeaderView  titleView= {'发现'}/>
+            {
+              <ListView
+                  dataSource={this.state.dataSource.cloneWithRows(classList) }
+                  renderRow={this._renderRow}
+                  enableEmptySections={true}
+                  style={{ height: Common.window.height-64,backgroundColor:'#f0f1f2'}}//减去导航的高度
+              />
+            }
+          </View>
+      );
+  }
+  renderRow(rowDate,sectionID, rowID) {
+      return (
+          <TouchableOpacity
+              activeOpacity={0.75}
+              onPress={this._onPressFeedItem.bind(this, rowDate, rowID) }
+              style={styles.center}>
+          <View style = {styles.container}>
+              <View style = {styles.left_view}>
+                  <Text style = {styles.title}>{rowDate}</Text>
+              </View>
+              <Image style = {styles.image_right} source = {require("../img/swiper_1.jpg")}></Image>
+          </View>
+          </TouchableOpacity>
+      );
+  }
+  _onPressFeedItem(rowDate, rowID) {
+      InteractionManager.runAfterInteractions(() => {
+          alert('待实现')
+      });
+  }
+}
+
+const styles = StyleSheet.create({
+      center:{
+         flexDirection: 'row',
+         justifyContent: 'center',
+         alignItems: 'center',
+      },
+      container: {
+          width: Common.window.width,
+          flexDirection: 'row',
+          alignItems: 'center',
+          backgroundColor: 'white',
+          borderBottomColor: '#ccc',
+          borderBottomWidth: 1,
+      },
+      image_right: {
+        height: 60,
+        width: 60,
+        marginTop: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        marginBottom: 10,
+        borderRadius:5,
+      },
+      title: {
+        textAlign: 'left',
+        marginLeft: 10,
+        alignSelf: 'center',
+      },
+      left_view: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+      }
+
+});
+
+
+module.exports = FindPage;

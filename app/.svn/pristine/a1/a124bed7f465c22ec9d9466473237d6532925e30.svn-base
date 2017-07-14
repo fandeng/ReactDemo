@@ -1,0 +1,143 @@
+//发现界面
+import React, {
+    Component
+} from 'react';
+import {
+    StyleSheet,
+    Text,
+    Image,
+    ListView,
+    TouchableOpacity,
+    View,
+    InteractionManager,
+    Dimensions,
+    TextInput,
+    Platform,
+} from 'react-native';
+
+import Common from '../common/common';
+import HeaderView from '../common/HeaderView';
+import WebViewDetails from '../components/WebDetails'
+import Style from '../style/style';
+import ResponseData from '../Data/Response.json';
+import REQUEST_JSON from '../Data/Request.json';
+import {toastShort} from '../utils/ToastUtil';
+var DataRepository = require('../Data/DataRepository');
+var repository = new DataRepository();
+
+let classList = [require("../img/swiper_1.jpg"),require("../img/swiper_2.jpg"),require("../img/swiper_3.jpg")];
+var pageNum = 1;
+class FindPage extends Component {
+  constructor(props) {
+      super(props);
+      this._renderRow = this.renderRow.bind(this);
+      this.state = {
+        data:ResponseData.querydiscoveryinfo.response_body.discoverylist,
+        dataSource: new ListView.DataSource({
+            rowHasChanged: (row1, row2) => row1 !== row2,
+        }),
+
+      };
+  }
+  render() {
+    this.request(1);
+      return (
+          <View>
+            <HeaderView  titleView= {'发现'} rightButton={''}/>
+            {
+              <ListView
+                  dataSource={this.state.dataSource.cloneWithRows(this.state.data) }
+                  renderRow={this._renderRow}
+                  enableEmptySections={true}
+                  onEndReached={this.loadmore.bind(this,pageNum)}
+                  style={{ height: Common.window.height-64,backgroundColor:'#f0f1f2'}}//减去导航的高度
+              />
+            }
+          </View>
+      );
+  }
+  renderRow(rowDate,sectionID, rowID) {
+      return (
+          <TouchableOpacity
+              activeOpacity={0.75}
+              onPress={this._onPressFeedItem.bind(this, rowDate) }
+              style={styles.center}>
+          <View style = {styles.container}>
+              <View style = {styles.left_view}>
+                  <Text style = {[Style.mainBody,{marginTop:5,marginLeft: 5,height:20,fontSize:16}]} numberOfLines = {1}>{rowDate.title}</Text>
+                  <Text style = {[Style.subtitle,{marginTop:5,marginLeft: 5,fontSize:14}]} numberOfLines = {2}>{rowDate.summary}</Text>
+              </View>
+              <Image style = {styles.image_right} source = {{uri:rowDate.cover}}></Image>
+          </View>
+          </TouchableOpacity>
+      );
+  }
+  componentDidMount(){
+
+  }
+  _onPressFeedItem(rowDate, rowID) {
+    InteractionManager.runAfterInteractions(() => {
+        this.props.navigator.push({
+            name: '详情',
+            component: WebViewDetails,
+            passProps:{
+              info:rowDate.serviceurl,
+            }
+        })
+    });
+  }
+  loadmore(page) {
+      if (parseInt(this.state.data.total) > pageNum*this.state.data.length) {
+        this.request(page);
+      } else {
+        toastShort('没有更多数据');
+      }
+  }
+  request(p) {
+      var querydiscoveryinfo = REQUEST_JSON.querydiscoveryinfo;
+      querydiscoveryinfo.userid = '123';
+      querydiscoveryinfo.pushpage = '3';
+      querydiscoveryinfo.pagenum = p.toString();
+      querydiscoveryinfo.pagesize = '20';
+      repository.launchRequest('querydiscoveryinfo',querydiscoveryinfo).then((responseData) => {
+          pageNum++;
+          console.log('------->'+pageNum);
+          console.log(responseData.response_body);
+          // this.setState({
+          //   data:responseData.querydiscoveryinfo.response_body.discoverylist
+          // })
+      }).done();
+  }
+}
+
+const styles = StyleSheet.create({
+      center:{
+         flexDirection: 'row',
+         justifyContent: 'center',
+         alignItems: 'center',
+      },
+      container: {
+          width: Common.window.width,
+          height:90,
+          flexDirection: 'row',
+          alignItems: 'center',
+          backgroundColor: 'white',
+          borderBottomColor: 'rgba(230.0, 230.0, 230.0, 1.0)',
+          borderBottomWidth: 1,
+          padding:10,
+      },
+      left_view: {
+        width:Common.window.width-90,
+        height:80
+      },
+      image_right: {
+        height: 60,
+        width: 60,
+        marginLeft: 10,
+        marginRight: 10,
+        borderRadius:8,
+      },
+});
+
+
+module.exports = FindPage;

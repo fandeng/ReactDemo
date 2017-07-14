@@ -1,0 +1,38 @@
+{
+   "querydictionarydata":{"response_body":{"areacode":"440100","areaname":"广州市","areatype":"6","officialcode":"440100","parentcode":"1024"},"response_head":{"process_code":"tranarea","resp_time":"2016-09-19 16:00:48","retinfo":{"retcode":"0","retmsg":""}}},
+      "queryuserinfo":{
+         "response_body":{
+                         "userid":"123",
+                         "token":"tasdsad",
+                         "servnum":"15988866666",
+                         "nickname":"叶潇",
+                         "headurl":"http://112.74.205.50/babylove-web/downfile?fileId=3772",
+                         "name":"叶潇",
+                         "age":"",
+                         "gender":"男",
+                         "identification":"415665445454544777",
+                         "address":"广州市",
+                         "employer":"",
+                         "office_address":"",
+                         "office_phone":"",
+                         "bank":"",
+                         "bank_card_num":"",
+                         "emergency_contacts":[
+                           {
+                             "name":"紫陌",
+                             "phone":"13566668888",
+                             "address":"广州市",
+                             "relation":"兄弟",
+                           },
+                         ],
+                       },
+         "response_head":{
+                         "process_code":"queryuserinfo",
+                         "resp_time":"2016-09-19 16:00:48",
+                         "retinfo":{
+                           "retcode":"0",
+                           "retmsg":""
+                          }
+                         }
+                       }
+   }

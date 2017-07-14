@@ -1,0 +1,36 @@
+//紧急联系人界面
+import React, { Component } from 'react';
+import  {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
+
+import Common from '../common/common';
+import HeaderView from '../common/HeaderView';
+
+import EmergencyContactContainer from '../components/EmergencyContact';
+
+class EmergencyContactVC extends Component {
+  render() {
+    return (
+      <View>
+        <HeaderView  titleView= {'紧急联系人'}
+        leftIcon={'angle-left'}
+        leftIconAction={() => this.props.navigator.pop() }
+        rightButton={'确认'}
+        collectIconAction={() => this.props.navigator.pop()}/>
+        {
+          <ScrollView style={{height: Common.window.height-64,width:Common.window.width}}>
+             <EmergencyContactContainer/>
+          </ScrollView>
+        }
+      </View>
+    );
+  }
+}
+
+module.exports = EmergencyContactVC;

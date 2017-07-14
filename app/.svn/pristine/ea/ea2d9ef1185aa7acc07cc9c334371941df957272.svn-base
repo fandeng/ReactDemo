@@ -1,0 +1,94 @@
+import React,{Component} from 'react';
+import{
+	StyleSheet,
+	Text,
+	View,
+	BackAndroid,
+	Platform,
+	TouchableOpacity,
+	Image,
+
+	ScrollView,
+} from 'react-native';
+var ImagePicker = require('react-native-image-picker');
+ // import ImagePickerManager from 'NativeModules';
+
+
+import HeaderView from '../common/HeaderView';
+import Common from '../common/common';
+import Login from '../pages/Login';
+import AboutUs from '../pages/AboutUs';
+import Style from '../style/style';
+
+
+export default class MySetting extends Component{
+
+
+
+	render(){
+
+		return (
+				<View style={{backgroundColor:'#F0F1F2',height:Common.window.height}}>
+				<HeaderView
+					titleView= {'安全设置'}
+		            leftIcon={'angle-left'}
+		            leftIconAction={() => this.props.navigator.pop() }
+				/>
+				<View style={{height:20,alignItems:'center',justifyContent: 'center'}}></View>
+				<View>
+					<TouchableOpacity style={styles.center} onPress = {this.onClick.bind(this,AboutUs)}>
+							<View style = {styles.Rowcontainer}>
+						 		  <Text style = {[Style.rowTitle,{textAlign:'left',marginLeft:15,width:Common.window.width-35}]}>关于我们</Text>
+						 		 <Image style = {styles.RowImage_right} source = {require("../img/listPromte.png")}></Image>
+					    </View>
+					</TouchableOpacity>
+
+					<TouchableOpacity style={styles.center} onPress = {this.onClick.bind(this,Login)}>
+							<View style = {styles.Rowcontainer}>
+									<Text style = {[Style.rowTitle,{textAlign:'left',marginLeft:15,width:Common.window.width-35}]}>退出登陆</Text>
+						 			<Image style = {styles.RowImage_right} source = {require("../img/listPromte.png")}></Image>
+						 </View>
+					</TouchableOpacity>
+				</View>
+				</View>
+			)
+		}
+
+	onClick(item){
+		this.props.navigator.push({
+				name:'登陆',
+				component:item,
+
+			})
+
+	}
+
+	 componentWillMount(){
+	 	 BackAndroid.addEventListener('hardwareBackPress', () => {
+    		this.props.navigator.pop()
+     		return true
+		});
+	 }
+}
+
+var styles =StyleSheet.create({
+	center:{
+			flexDirection: 'row',
+			justifyContent: 'center',
+			alignItems: 'center',
+	},
+	Rowcontainer: {
+		width: Common.window.width,
+		height:55,
+		flexDirection: 'row',
+		alignItems: 'center',
+		backgroundColor: 'white',
+		borderBottomColor: 'rgba(230.0, 230.0, 230.0, 1.0)',
+		borderBottomWidth: 1,
+	},
+	RowImage_right: {
+	 height: 15,
+	 width: 8,
+	 marginRight:10,
+	},
+});

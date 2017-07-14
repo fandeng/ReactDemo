@@ -1,0 +1,55 @@
+//拍照界面
+import React, { Component } from 'react';
+import  {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
+
+import Common from '../common/common';
+import HeaderView from '../common/HeaderView';
+import PhotographCertificateContainer from'../components/PhotographCertificate';
+import LookBigImage from '../components/LookBigImage'
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter'
+
+class PhotographCertificateVC extends Component {
+  render() {
+    return (
+      <View>
+        <HeaderView  titleView= {'拍照认证'}
+        leftIcon={'angle-left'}
+        leftIconAction={() => this.props.navigator.pop() }
+        rightButton={'确认'}
+        collectIconAction={() => this.props.navigator.pop()}/>
+        {
+          <ScrollView style={{height: Common.window.height-64,width:Common.window.width}}>
+            <PhotographCertificateContainer/>
+            <View style={{height:60}}/>
+          </ScrollView>
+        }
+      </View>
+    );
+  }
+  componentDidMount() {
+
+      this.changeHeight = RCTDeviceEventEmitter.addListener('lookBigImage',(value)=>{
+        console.log(value);
+          this.props.navigator.push({
+              name: '大图',
+              component: LookBigImage,
+              passProps: {
+                  rowDate: value,
+              }
+          })
+      });
+  }
+  componentWillUnmount() {
+     this.changeHeight.remove('lookBigImage');
+  }
+}
+
+
+module.exports = PhotographCertificateVC;

@@ -1,0 +1,74 @@
+import React,{Component} from 'react';
+import{
+	StyleSheet,
+	Text,
+	View,
+	BackAndroid,
+	Platform,
+	TouchableOpacity,
+	Image,
+
+	ScrollView,
+} from 'react-native';
+var ImagePicker = require('react-native-image-picker');
+ // import ImagePickerManager from 'NativeModules';
+
+
+import HeaderView from '../common/HeaderView';
+import Common from '../common/common';
+import Login from '../pages/Login';
+import AboutUs from '../pages/AboutUs';
+
+
+export default class MySetting extends Component{
+	
+
+
+	render(){
+
+		return (
+				<View style={{backgroundColor:'#F0F1F2',height:Common.window.height-64}}>
+				<HeaderView 
+					titleView= {'安全设置'}
+		            leftIcon={'angle-left'}
+		            leftIconAction={() => this.props.navigator.pop() }
+				/>
+				<View style={{height:20,alignItems:'center',justifyContent: 'center'}}></View>
+				<View>
+					<TouchableOpacity style={styles.view_style} onPress = {this.onClick.bind(this,AboutUs)}>
+							<View style={{alignItems: 'flex-start',justifyContent: 'center',flex:7,marginLeft:20}}>
+								<Text style={{}}>关于我们</Text>
+							</View>
+							<View style={{alignItems: 'flex-start',justifyContent: 'center',flex:1,marginLeft:20}}>
+							<Image style={{height:20,width:10}} source={require('../img/listPromte.png')}></Image>
+							</View>
+					</TouchableOpacity>
+
+					<View style={{height:1,backgroundColor:'#D3D3D3',alignItems:'center',marginLeft:20}}></View>
+
+					<TouchableOpacity style={styles.view_style} onPress = {this.onClick.bind(this,Login)}>
+						<View style={{alignItems: 'flex-start',justifyContent: 'center',flex:7,marginLeft:20}}>
+								<Text style={{}}>退出登陆</Text>
+							</View>
+							<View style={{alignItems: 'flex-start',justifyContent: 'center',flex:1,marginLeft:20}}>
+							<Image style={{height:20,width:10}} source={require('../img/listPromte.png')}></Image>
+							</View>
+					</TouchableOpacity>
+				</View>
+				</View>
+			)
+		}
+
+	onClick(item){
+		this.props.navigator.push({
+				name:'登陆',
+				component:item,
+				
+			})
+
+	}
+}
+
+var styles =StyleSheet.create({
+	view_style:{flex:1,justifyContent: 'flex-end',flexDirection:'row',height:60,backgroundColor:'#ffffff'},
+});

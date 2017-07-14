@@ -1,0 +1,37 @@
+//单位信息界面
+import React, { Component } from 'react';
+import  {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
+
+import Common from '../common/common';
+import HeaderView from '../common/HeaderView';
+
+import UnitsInformationContainer from '../components/UnitsInformation';
+
+class UnitsInformationVC extends Component {
+  render() {
+    return (
+      <View>
+        <HeaderView  titleView= {'单位信息'}
+        leftIcon={'angle-left'}
+        leftIconAction={() => this.props.navigator.pop() }
+        rightButton={'确认'}
+        collectIconAction={() => this.props.navigator.pop()}/>
+        {
+          <ScrollView style={{backgroundColor:'#f0f1f2',height: Common.window.height-64,width:Common.window.width}}>
+             <UnitsInformationContainer/>
+          </ScrollView>
+        }
+      </View>
+    );
+  }
+}
+
+
+module.exports = UnitsInformationVC;

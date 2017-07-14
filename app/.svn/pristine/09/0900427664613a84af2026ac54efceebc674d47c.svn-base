@@ -1,0 +1,194 @@
+import React, { Component } from 'react';
+import {
+    StyleSheet,
+    Text,
+    Image,
+    ListView,
+    ScrollView,
+    TouchableOpacity,
+    View,
+    InteractionManager,
+    Dimensions,
+    Platform,
+    Alert,
+} from 'react-native';
+
+import Common from '../common/common';
+import HeaderView from '../common/HeaderView';
+
+import DeviceInfo from 'react-native-device-info';
+
+import ControlFD from '../pages/UIControl';
+import MineLoanContainer from '../pages/MyLoan';
+
+class MineContainer extends Component {
+    render() {
+        return (
+          <View style = {{backgroundColor: '#f0f1f2'}}>
+            <ScrollView style = {{width:Common.window.width,height:Common.window.height-49}}>
+               <View style = {styles.TopView_back}>
+                    <View style = {styles.TopImage_back}>
+                      <Image style = {styles.TopImage} source = {require('../img/header.png')}></Image>
+                    </View>
+                    <Text style = {styles.TopPhone_text}>手机号码</Text>
+                    <Text style = {styles.TopName_text}>姓名</Text>
+                    <View style = {styles.TopView_bottom}>
+                        <View style={[styles.TopBottom_child,{marginLeft:10}]}>
+                          <Text style={styles.TopBottom_text}>申请贷款(笔)</Text>
+                          <Text style={styles.TopBottom_text}>2</Text>
+                        </View>
+                        <View style={{backgroundColor:'rgba(255.0, 255.0, 255.0, 0.5)',width:1,height:70}}/>
+                        <View style={styles.TopBottom_child}>
+                          <Text style={styles.TopBottom_text}>需还贷款(笔)</Text>
+                          <Text style={styles.TopBottom_text}>2</Text>
+                        </View>
+                    </View>
+               </View>
+               <TouchableOpacity
+                   activeOpacity={0.5}
+                   onPress={()=>this._onPressFeedItem('first',0)}
+                   style={styles.center}>
+                   <View style = {styles.Rowcontainer}>
+                      <Image style = {styles.RowImage_left} source = {require("../img/essay.png")}></Image>
+                      <Text style = {styles.RowTitle_text}>我的贷款</Text>
+                      <Image style = {styles.RowImage_right} source = {require("../img/listPromte.png")}></Image>
+                   </View>
+               </TouchableOpacity>
+               <TouchableOpacity
+                   activeOpacity={0.5}
+                   onPress={()=>this._onPressFeedItem('second',1)}
+                   style={styles.center}>
+                   <View style = {styles.Rowcontainer}>
+                      <Image style = {styles.RowImage_left} source = {require("../img/mine.png")}></Image>
+                      <Text style = {styles.RowTitle_text}>我的资料</Text>
+                      <Image style = {styles.RowImage_right} source = {require("../img/listPromte.png")}></Image>
+                   </View>
+               </TouchableOpacity>
+               <View style= {{height:15}}/>
+               <TouchableOpacity
+                   activeOpacity={0.5}
+                   onPress={()=>this._onPressFeedItem('third',2)}
+                   style={styles.center}>
+                   <View style = {styles.Rowcontainer}>
+                      <Image style = {styles.RowImage_left} source = {require("../img/setting.png")}></Image>
+                      <Text style = {styles.RowTitle_text}>设置</Text>
+                      <Image style = {styles.RowImage_right} source = {require("../img/listPromte.png")}></Image>
+                   </View>
+               </TouchableOpacity>
+            </ScrollView>
+          </View>
+        );
+    }
+    //item点击事件
+    _onPressFeedItem(aSceneName,aIndexNumber) {
+        InteractionManager.runAfterInteractions(() => {
+            // this.props.navigator.push({
+            //     name: aSceneName,
+            //     component: aIndexNumber,
+            // })
+            if (aIndexNumber == 2) {
+            this.props.navigator.push({
+                name: aSceneName,
+                  component: EmergencyContactFD,
+            })
+            } else {
+              Alert.alert('温馨提示','待实现')
+            }
+
+        });
+    }
+}
+
+const styles = StyleSheet.create({
+    center:{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    Rowcontainer: {
+      width: Common.window.width,
+      height:55,
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: 'white',
+      borderBottomColor: 'rgba(230.0, 230.0, 230.0, 1.0)',
+      borderBottomWidth: 1,
+    },
+    RowImage_right: {
+     height: 15,
+     width: 8,
+     marginRight: 10,
+    },
+    RowImage_left: {
+      height: 20,
+      width: 20,
+      marginLeft: 10,
+    },
+    RowTitle_text: {
+     textAlign: 'left',
+     fontSize: 15,
+     color: '#333333',
+     marginLeft:10,
+     width:Common.window.width-70,
+    },
+    TopView_back:{
+      backgroundColor: '#1a98ff',
+      height: Platform.OS == 'ios'?260:240,
+      width: Common.window.width,
+    },
+    TopImage:{
+      height: 60,
+      width: 60,
+      marginTop: 0,
+      marginLeft: Common.window.width/2-30,
+      borderRadius:30,
+      borderColor:'white',
+      borderWidth:2,
+    },
+    TopPhone_text:{
+      textAlign: 'center',
+      fontSize: 14,
+      color: 'white',
+      marginTop:10,
+      marginLeft:20,
+      width:Common.window.width-40,
+      height:20,
+    },
+    TopName_text:{
+      textAlign: 'center',
+      fontSize: 14,
+      color: 'white',
+      marginTop:10,
+      marginLeft:20,
+      height:20,
+      width:Common.window.width-40,
+    },
+    TopView_bottom:{
+      backgroundColor: 'rgba(22.0, 114.0, 226.0, 1.0)',
+      marginTop:Platform.OS == 'ios'?10:10,
+      height:Platform.OS == 'ios'?90:90,
+      flexDirection: 'row',
+      alignItems: 'center'
+    },
+    TopBottom_child:{
+      backgroundColor:'rgba(22.0, 114.0, 226.0, 1.0)',
+      width:(Common.window.width-20)/2,
+      height:70,
+      alignItems: 'center'
+    },
+    TopBottom_text:{
+      color:'white',
+      fontSize: 14,
+      marginTop:15,
+      textAlign:'center',
+      width:(Common.window.width-20)/2,
+    },
+    TopImage_back:{
+     backgroundColor: '#1a98ff',
+     height: 60,
+     width: Common.window.width,
+     marginTop: Platform.OS == 'ios'?40:20,
+     flexDirection: 'row',
+   },
+});
+module.exports = MineContainer;

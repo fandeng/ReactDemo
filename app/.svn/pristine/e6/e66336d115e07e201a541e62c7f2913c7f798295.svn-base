@@ -1,0 +1,106 @@
+	import React,{Component} from 'react';
+	import{
+		StyleSheet,
+		Text,
+		View,
+		Image,
+		BackAndroid,
+		Platform,
+		TouchableOpacity,
+		ListView,
+		ScrollView,
+	} from 'react-native';
+
+	import HeaderView from '../common/HeaderView';
+	import Common from '../common/common';
+
+	import REQUEST_JSON from '../Data/Request.json';
+var DataRepository = require('../Data/DataRepository');
+var repository = new DataRepository();
+var  Response =require('../Data/Response');
+	
+var  classlist=[1,1,1,1,1,1,1,0,0,0,0,0,0];
+
+export default class RepaymentPlan extends Component{
+
+	constructor(props) {
+	  super(props);
+	
+	  this.state = {
+	  	dataSource:new ListView.DataSource({rowHasChanged:(r1,r2)=> row1 !== row2}),
+	  };
+	}
+
+	render(){
+		
+		return (<View>
+					<HeaderView
+			 		titleView= {'还款计划'}
+                    leftIcon={'angle-left'}
+                    leftIconAction={() => this.props.navigator.pop() }
+                    />
+                    <View style={{height:60,flexDirection:'row',alignItems:'center',justifyContent: 'center'}}>
+                    	<Text style={styles.text_style}>期数</Text>
+                    	<Text style={styles.text_style}>还款时间</Text>
+                    	<Text style={styles.text_style}>金额</Text>
+                    	<Text style={styles.text_style}>状态</Text>
+                    </View>
+					<ListView
+						dataSource={this.state.dataSource.cloneWithRows(classlist)}
+						renderRow={this.renderData.bind(this)}
+						initialListSize={10}
+						style={{ height: Common.window.height-64-60,flex:1}}//减去导航的高度
+					/>
+				</View>
+			)
+	}
+
+	renderData(isrepay){
+
+		return (
+				<View >
+					<View style={{flex:1,backgroundColor:'#D3D3D3',height:20}}></View>
+					<View style={{height:80,flexDirection:'row',alignItems:'center',justifyContent: 'center'}}>
+						<View style={{alignItems:'center',justifyContent: 'center',flex:1,flexDirection:'column'}}>
+						<Image style={{height:25,width:25}} source={require("../img/essay.png")}></Image>
+						</View>
+						<Text style={styles.text2_style}>2016-09-27</Text>
+						<Text style={styles.text2_style}>1024.00</Text>
+						<Text style={isrepay==1? styles.text_gray_style:styles.text_red_style}>{isrepay==1? '已还款':'未还款'}</Text>
+					</View>
+				</View>
+				);
+	}
+
+	componentDidMount(){
+		
+
+		 BackAndroid.addEventListener('hardwareBackPress', () => {
+    		this.props.navigator.pop()
+     		return true
+		});
+	}
+
+		 request() {
+        var queryloandetail = REQUEST_JSON.querydictionarydata;
+        
+        // alert(page);
+        
+        repository.launchRequest('queryloandetail',queryloandetail).then((responseData) => {
+        	console.log('request  response======>'+responseData.response_body);
+            this.setState({
+					data:responseData.response_body
+				})
+        }).done();
+    }
+
+
+}
+
+var styles = StyleSheet.create({
+
+	text_style:{flex:1,textAlign:'center',fontSize:16},
+	text_red_style:{flex:1,textAlign:'center',fontSize:16,color:'#FF0000'},
+	text_gray_style:{flex:1,textAlign:'center',fontSize:16,color:'#999999'},
+	text2_style:{flex:1,textAlign:'center',fontSize:16,fontWeight:'bold'},
+});

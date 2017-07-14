@@ -1,0 +1,103 @@
+//我的银行卡界面
+import React, { Component } from 'react';
+import {
+    StyleSheet,
+    Text,
+    Image,
+    ListView,
+    TouchableOpacity,
+    View,
+    InteractionManager,
+    Dimensions,
+    TextInput,
+    Platform,
+} from 'react-native';
+
+import Common from '../common/common';
+import HeaderView from '../common/HeaderView';
+import AddBankCardContainer from '../components/AddBankCard';
+import Style from '../style/style';
+
+class MineBankCardContainer extends Component {
+  constructor(props) {
+      super(props);
+      this._renderRow = this.renderRow.bind(this);
+      this.state = {
+        bankdata:this.props.userdata.bank_cards,
+        dataSource: new ListView.DataSource({
+            rowHasChanged: (row1, row2) => row1 !== row2,
+        }),
+      };
+  }
+    render() {
+        return (
+          <View>
+            <HeaderView  titleView= {'我的银行卡'}
+            leftIcon={'angle-left'}
+            leftIconAction={() => this.props.navigator.pop() }
+            rightButton={'添加'}
+            collectIconAction={()=>this._addBankCard()}/>
+            {
+              <ListView
+                  dataSource={this.state.dataSource.cloneWithRows(this.props.userdata.bank_cards) }
+                  renderRow={this._renderRow}
+                  enableEmptySections={true}
+                  style={{ height: Common.window.height-64}}//减去导航的高度
+              />
+            }
+          </View>
+      );
+  }
+  renderRow(rowDate,sectionID, rowID) {
+      return (
+          <TouchableOpacity
+              activeOpacity={0.75}
+              onPress={this._onPressFeedItem.bind(this, rowDate, rowID) }
+              style={styles.center}
+          >
+          <View style = {styles.container}>
+              <View style={{marginLeft:10,width:Common.window.width-40,height:30,marginTop:8,flexDirection:'row'}}>
+                  <Image style={{width:20,height:20,marginTop:8}} source={require("../img/essay.png")}/>
+                  <Text style = {[Style.mainBody,{marginLeft:10,height:20,marginTop:10}]}>{rowDate.bank}</Text>
+              </View>
+              <Text style = {[Style.mainBody,{textAlign:'right',marginTop:10}]}>{rowDate.bank_card_num}</Text>
+          </View>
+          </TouchableOpacity>
+      );
+  }
+  _onPressFeedItem() {
+      InteractionManager.runAfterInteractions(() => {
+
+      });
+  }
+  _addBankCard(){
+    InteractionManager.runAfterInteractions(() => {
+       this.props.navigator.push({
+          name: '添加',
+          component: AddBankCardContainer,
+          passProps:{
+            info:1,
+          }
+       })
+    });
+
+  }
+}
+
+const styles = StyleSheet.create({
+      center:{
+         flexDirection: 'row',
+         justifyContent: 'center',
+         alignItems: 'center',
+      },
+      container: {
+        width: Common.window.width-20,
+        height:80,
+        backgroundColor: 'white',
+        borderBottomColor: 'rgba(230.0, 230.0, 230.0, 1.0)',
+        borderBottomWidth: 1,
+      },
+});
+
+
+module.exports = MineBankCardContainer;

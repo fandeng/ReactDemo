@@ -1,0 +1,131 @@
+//字体样式
+import React, {
+    Component
+} from 'react';
+import {
+    StyleSheet,
+    Text,
+    ScrollView,
+    View,
+} from 'react-native';
+
+import Common from '../common/common';
+import HeaderView from '../common/HeaderView';
+import FontStyleFD from '../common/FontStyle';
+
+class TextStyleFD extends Component {
+  render() {
+      return(
+        <View>
+          <HeaderView  titleView= {'字体样式'}
+          leftIcon={'angle-left'}
+          leftIconAction={() => this.props.navigator.pop() }/>
+          {
+            <ScrollView style = {{width:Common.window.width,height:Common.window.height-64}}>
+             <Text style = {{height:20}}>一号，导航栏</Text>
+               <View style = {{width:Common.window.width,height:50,backgroundColor:'aqua'}}>
+                  <Text style={styles.navigatorTitle}>自古人生最忌满，半贫半富半自安</Text>
+                  <Text style={styles.container}>描述:大小16，fontWeight:bold，左对齐</Text>
+               </View>
+
+               <Text style = {{height:20}}>二号，标题</Text>
+               <View style = {{width:Common.window.width,height:50,backgroundColor:'aqua'}}>
+                  <Text style={styles.title}>半命半天半机遇，半取半舍半行善</Text>
+                  <Text style={styles.container}>描述:大小15，fontWeight:normal，右对齐</Text>
+               </View>
+
+               <Text style = {{height:20}}>三号，副标题</Text>
+               <View style = {{width:Common.window.width,height:50,backgroundColor:'aqua'}}>
+                  <Text style={styles.subheading}>半聋半哑半糊涂，半智半愚半圣贤</Text>
+                  <Text style={styles.container}>描述:大小14，fontWeight:100，居中</Text>
+               </View>
+
+               <Text style = {{height:20}}>四号：小标题</Text>
+               <View style = {{width:Common.window.width,height:50,backgroundColor:'aqua'}}>
+                  <Text style={styles.subtitle}>半人半我半自在，半醒半醉半神仙</Text>
+                  <Text style={styles.container}>描述:大小13，fontWeight:200，左对齐</Text>
+               </View>
+
+               <Text style = {{height:20}}>五号：内容主体</Text>
+               <View style = {{width:Common.window.width,height:50,backgroundColor:'aqua'}}>
+                  <Text style={styles.mainBody}>半亲半爱半苦乐，半俗半禅半随缘</Text>
+                  <Text style={styles.container}>描述:大小12，fontWeight:300，左对齐</Text>
+               </View>
+
+               <Text style = {{height:20}}>六号：说明摘要</Text>
+               <View style = {{width:Common.window.width,height:50,backgroundColor:'aqua'}}>
+                  <Text style={styles.caption}>人生一半在于我，另外一半听自然</Text>
+                  <Text style={styles.container}>描述:大小11，fontWeight:400，左对齐</Text>
+               </View>
+            </ScrollView>
+          }
+        </View>
+    );
+  }
+}
+const styles = StyleSheet.create({
+      container: {
+        marginLeft:10,
+        marginTop:5,
+        height:20,
+        textAlign: 'left',
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: 'red',
+      },
+      navigatorTitle:{
+        marginLeft:10,
+        marginTop:5,
+        height:20,
+        textAlign: 'left',
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: 'black',
+      },
+      title:{
+        marginRight:10,
+        marginTop:5,
+        height:20,
+        textAlign: 'right',
+        fontSize: 15,
+        fontWeight: 'normal',
+        color: 'black',
+      },
+      subheading:{
+        marginTop:5,
+        height:20,
+        textAlign: 'center',
+        fontSize: 14,
+        fontWeight: '100',
+        color: 'black',
+      },
+      subtitle:{
+        marginLeft:10,
+        marginTop:5,
+        height:20,
+        textAlign: 'left',
+        fontSize: 13,
+        fontWeight: '200',
+        color: 'black',
+      },
+      mainBody:{
+        marginLeft:10,
+        marginTop:5,
+        height:20,
+        textAlign: 'left',
+        fontSize: 12,
+        fontWeight: '300',
+        color: 'black',
+      },
+      caption:{
+        marginLeft:10,
+        marginTop:5,
+        height:20,
+        textAlign: 'left',
+        fontSize: 11,
+        fontWeight: '400',
+        color: 'black',
+      },
+});
+
+module.exports = TextStyleFD;

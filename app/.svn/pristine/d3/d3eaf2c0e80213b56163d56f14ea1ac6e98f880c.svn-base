@@ -1,0 +1,5 @@
+{
+  "BASE_REQUEST":{"request_body":{},"request_head":{"app_version":""," appid":"","process_code":"","req_time":"","token":"","uid":""}},
+  "querydictionarydata":{"queryflag":"1"},
+  "queryuserinfo":{"userid":"123"}
+}

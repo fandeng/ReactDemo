@@ -1,0 +1,103 @@
+//个人信息显示进度条
+import React, {
+    Component
+} from 'react';
+
+import  {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Platform,
+  TouchableOpacity,
+  InteractionManager,
+  Image,
+  Alert,
+} from 'react-native';
+
+import Common from '../common/common';
+
+class InformationProgressContainer extends Component {
+  render() {
+    const {image} = this.props;
+    const {progressArray} = this.props;
+    return (
+      <View style={styles.style_view}>
+         <View style={styles.style_Imgview}>
+            <Image style= {styles.style_xianImage} source={image[0]=='0'?require("../img/nofinsh_xian.png"):require("../img/finsh_xian.png")}/>
+            <Image style= {styles.style_image} source={image[0]=='0'?require("../img/nofinsh.png"):require("../img/finsh.png")}/>
+
+            <Image style= {styles.style_xianImage} source={image[1]=='0'?require("../img/nofinsh_xian.png"):require("../img/finsh_xian.png")}/>
+            <Image style= {styles.style_image} source={image[1]=='0'?require("../img/nofinsh.png"):require("../img/finsh.png")}/>
+
+            <Image style= {styles.style_xianImage} source={image[2]=='0'?require("../img/nofinsh_xian.png"):require("../img/finsh_xian.png")}/>
+            <Image style= {styles.style_image} source={image[2]=='0'?require("../img/nofinsh.png"):require("../img/finsh.png")}/>
+
+            <Image style= {styles.style_xianImage} source={image[3]=='0'?require("../img/nofinsh_xian.png"):require("../img/finsh_xian.png")}/>
+            <Image style= {styles.style_image} source={image[3]=='0'?require("../img/nofinsh.png"):require("../img/finsh.png")}/>
+
+            <Image style= {styles.style_xianImage} source={image[4]=='0'?require("../img/nofinsh_xian.png"):require("../img/finsh_xian.png")}/>
+            <Image style= {styles.style_image} source={image[4]=='0'?require("../img/nofinsh.png"):require("../img/finsh.png")}/>
+
+            <Image style= {styles.style_xianImage} source={image[4]=='0'?require("../img/nofinsh_xian.png"):require("../img/finsh_xian.png")}/>
+         </View>
+
+         <View style={styles.style_back}>
+           <Text  style = {styles.cardText}>{progressArray[0]}</Text>
+           <Text  style = {styles.cardText}>{progressArray[1]}</Text>
+           <Text  style = {styles.cardText}>{progressArray[2]}</Text>
+           <Text  style = {styles.cardText}>{progressArray[3]}</Text>
+           <Text  style = {styles.cardText}>{progressArray[4]}</Text>
+         </View>
+
+      </View>
+    );
+  }
+}
+// <Image style= {styles.style_image} source={image}/>
+// <View style = {styles.style_back}>
+//   {this.renderItems(progressArray)}
+// </View>
+const styles = StyleSheet.create({
+  style_view:{
+    width:Common.window.width,
+    height: 120,
+    backgroundColor:'white',
+  },
+  style_Imgview:{
+    width:Common.window.width-20,
+    height: 40,
+    marginTop:30,
+    marginLeft:10,
+    alignItems:'center',
+    flexDirection:'row'
+  },
+  style_image: {
+    width:35,
+    height: 35,
+    marginTop:-20,
+  },
+  style_back:{
+    width:Common.window.width-20,
+    height: 40,
+    marginTop:0,
+    marginLeft:10,
+    alignItems:'center',
+    flexDirection:'row'
+  },
+  style_xianImage:{
+    width:(Common.window.width-5*35-20)/6,
+    height: 10,
+    marginTop:-20,
+  },
+  cardText:{
+    width:Common.window.width>320?60:40,
+    marginLeft:Common.window.width>320?(Common.window.width-5*60-20)/6:(Common.window.width-5*40-20)/6,
+    color:'#333333',
+    fontSize: 13,
+    textAlign:'center',
+  },
+});
+// items ==' 75%'|| items == '100%'
+module.exports = InformationProgressContainer;

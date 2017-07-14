@@ -1,0 +1,48 @@
+//个人信息显示进度条
+import React, {
+    Component
+} from 'react';
+
+import  {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Platform,
+  TouchableOpacity,
+  InteractionManager,
+  Image,
+  Alert,
+} from 'react-native';
+
+import Common from '../common/common';
+
+class InformationProgressContainer extends Component {
+  render() {
+    return (
+      <View style={styles.style_view}>
+          <Image style= {styles.style_image} source={require("../img/progress.png")}>
+              <Text style= {{marginTop:40,marginLeft:10,textAlign:'center'}}>暂无进度图</Text>
+          </Image>
+      </View>
+    );
+  }
+}
+const styles = StyleSheet.create({
+  style_view:{
+    width:Common.window.width,
+    height: 120,
+    backgroundColor:'white',
+    alignItems: 'center',
+  },
+  style_image: {
+    width:Common.window.width-20,
+    height: 100,
+    marginLeft:10,
+    marginTop:10,
+    alignItems: 'center',
+  }
+});
+
+module.exports = InformationProgressContainer;

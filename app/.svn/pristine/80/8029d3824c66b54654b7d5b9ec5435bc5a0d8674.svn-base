@@ -1,0 +1,328 @@
+	import React,{Component} from 'react';
+	import{
+		StyleSheet,
+		Text,
+		View,
+		Image,
+		BackAndroid,
+		Platform,
+		TouchableOpacity,
+		ListView,
+		ScrollView,
+		PanResponder,
+		InteractionManager,
+	} from 'react-native';
+
+import HeaderView from '../common/HeaderView';
+import Common from '../common/common';
+
+import REQUEST_JSON from '../Data/Request.json';
+import StyleImport from '../style/style';
+import ApplyVC from '../pages/ApplyMineInformation';
+
+
+var DataRepository = require('../Data/DataRepository');
+var repository = new DataRepository();
+var  Response =require('../Data/Response');
+var style_buts;
+var style_texts;
+var dateShow=6;
+
+var fristPosition=0;
+
+var D_Money=0;
+var Min_Money=0;
+var laonMoney=Min_Money;
+
+var repaymentMoney=0;
+
+var month_but_width=Common.window.width-150;
+
+var replayDates=[6,9,12];
+
+export default class RepaymentPlan extends Component{
+
+	constructor(props) {
+	   super(props);
+	   
+	   Min_Money=this.props.money.min;
+	   D_Money=this.props.money.max - Min_Money;
+	   laonMoney=this.props.money.min;
+	   replayDates=this.props.dates;
+	  	this.state = {
+	  	selected:0,
+	  	left:0,
+	  };
+	}
+
+	render(){
+		this.selectDate(this.state.selected);
+		return (<View>
+			<HeaderView 
+						titleView= {'选择贷款'}
+		                leftIcon={'angle-left'}
+		                leftIconAction={() => this.props.navigator.pop() }
+					/>
+					<ScrollView style={{height: Platform.OS == 'ios'? Common.window.height-64:Common.window.height - 50}}>
+					<Image style = {styles.TopView_back} source = {require("../img/minebg.png")}>
+                    <View style = {styles.TopImage_back}>
+                    	<View>
+                       		<Text style = {styles.TopPhone_text}>申请金额(元)</Text>
+                    		<Text style = {styles.TopName_text}>{this.toDecimal(laonMoney)}</Text>
+                    	</View>
+                    </View>
+                    
+                    <View style = {styles.TopView_bottom}>
+                        <View style={[styles.TopBottom_child,{marginLeft:10}]}>
+                          <Text style={styles.TopBottom_text}>每月最低还款(元)</Text>
+                          <Text style={styles.TopBottom_text}>{this.toDecimal(repaymentMoney)}</Text>
+                        </View>
+                        <View style={{backgroundColor:'rgba(255.0, 255.0, 255.0, 0.5)',width:1,height:60}}/>
+                        <View style={styles.TopBottom_child}>
+                          <Text style={styles.TopBottom_text}>还款期限(月)</Text>
+                          <Text style={styles.TopBottom_text}>{dateShow}</Text>
+                        </View>
+                    </View>
+               </Image>
+				<View style={{flex:1,flexDirection:'column',paddingLeft:15,paddingRight:15}}>
+					<Text style={{marginTop:15,textAlign:'left',fontSize:16}}>申请金额（元）</Text>
+					<View style={{flex:1,height:100,justifyContent: 'center',alignItems: 'center'}}>
+
+						<View {...this._panResponder.panHandlers} style={{height:60,width:month_but_width,justifyContent: 'center'}}>
+							<View style={{width:month_but_width-10,backgroundColor:'#999999',height:10,top:25,position:'absolute',marginLeft:5,marginRight:5}}></View>
+							<View style={{width:this.state.left,backgroundColor:'#1a98ff',height:10,top:25,position:'absolute',marginLeft:5,marginRight:5}}></View>
+							<View  style={{width:30,backgroundColor:'#999999',height:30,
+							borderRadius:90,borderColor:'#1a98ff',borderWidth:1,position:'absolute',top:15,left:this.state.left}}></View>
+						
+						</View>
+					</View>
+
+					<Text style={{marginTop:15,textAlign:'left',fontSize:16}}>贷款期限（月）</Text>
+
+					<View style={{height:200,flexDirection:'column',paddingTop:30, alignItems: 'center'}}>
+						<View style={{flexDirection:'row',justifyContent: 'center', alignItems: 'center',width:month_but_width}}>
+						
+							<TouchableOpacity style={style_buts[0]}
+											onPress = {this.onClick.bind(this,0)}>
+								<Text style={style_texts[0]}>{replayDates[0]}</Text>
+							</TouchableOpacity>
+							<TouchableOpacity style={style_buts[1]}
+											onPress = {this.onClick.bind(this,1)}>
+								<Text style={style_texts[1]}>{replayDates[1]}</Text>
+							</TouchableOpacity>
+							<TouchableOpacity style={style_buts[2]}
+											onPress = {this.onClick.bind(this,2)}>
+								<Text style={style_texts[2]}>{replayDates[2]}</Text>
+							</TouchableOpacity>
+
+							
+						</View>
+						<View style={{height:50,alignItems:'center',marginTop:60}}>
+								<TouchableOpacity style={[StyleImport.button_style,{width:month_but_width,height:50}]}
+											onPress = {this.onClick.bind(this,3)}>
+											<Text style={{textAlign:'center',color:'#ffffff',fontSize:15}}>立即申请</Text>
+								</TouchableOpacity>
+						</View>
+					</View>
+
+				</View>
+				</ScrollView>
+				</View>)
+	}
+
+	  componentWillMount(){
+		
+
+	  	this._panResponder = PanResponder.create({
+		onStartShouldSetPanResponder: () => true,
+		onMoveShouldSetPanResponder: ()=> true,
+		onPanResponderMove: (evt,gs)=>{
+		     console.log(gs.dx+' ===='+gs.dy+"-----"+this.state.left)
+		     if (gs.moveX>90) {console.log(gs.moveX);}
+		        
+		     let x=gs.dx;
+		        
+		      if (gs.moveX<=month_but_width+75 && gs.moveX>=75) {
+		        	console.log('time to change');
+		        	this.changeMoney(gs.moveX-75);
+		        	this.calculateRepayment();
+		        	this.setState({
+		          
+			          	left: gs.moveX-90
+			        });
+			       
+		        }
+  
+		      },
+		     
+		     
+		    })
+
+		 BackAndroid.addEventListener('hardwareBackPress', () => {
+    		this.props.navigator.pop()
+     		return true
+		});
+
+
+	  }
+
+	  componentWillUnmount(){
+	  	D_Money=0;
+	  	Min_Money=0;
+	  	repaymentMoney=0;
+	  }
+	  changeMoney(index){
+	  		let num=index/(month_but_width-20);
+	  		if (num>1) {
+	  			laonMoney=D_Money+Min_Money;
+	  			return ;
+	  		}
+	  		if (num<=(120/D_Money)) {
+	  			num=0;
+	  		}
+
+	  		let money=parseInt((num*D_Money)/100)*100+Min_Money;
+	  		laonMoney=money;
+
+
+	  }
+
+	  calculateRepayment(){
+	  	repaymentMoney=laonMoney/dateShow;
+	  }
+
+	//保留两位小数
+	toDecimal(x) { 
+	      var f = parseFloat(x); 
+	      if (isNaN(f)) { 
+	        return false; 
+	      } 
+	      var f = Math.round(x*100)/100; 
+	      var s = f.toString(); 
+	      var rs = s.indexOf('.'); 
+	      if (rs < 0) { 
+	        rs = s.length; 
+	        s += '.'; 
+	      } 
+	      while (s.length <= rs + 2) { 
+	        s += '0'; 
+	      } 
+	      return s; 
+	    } 
+
+
+	onClick(i){
+		if (i<3) {
+			this.setState({
+					selected:i,
+				})
+		}else if (i==3) {
+			InteractionManager.runAfterInteractions(() => {
+		        this.props.navigator.push({
+		            name: '消息',
+		            component: ApplyVC,
+		        })
+		    });
+		}
+
+		
+	}
+
+	selectDate(i){
+		
+		let w_margin= Platform.os=='ios' ? (month_but_width-60)/2:(month_but_width-180)/2;
+		if (i==0) {
+			dateShow=replayDates[0];
+			this.calculateRepayment();
+			style_buts=[[styles.button_date_style,{backgroundColor:'#1a98ff'}],[styles.button_date_style,{marginLeft:w_margin,marginRight:w_margin}],styles.button_date_style];
+			style_texts=[[styles.text_style,{color:'white'}],styles.text_style,styles.text_style];
+		}
+		else if (i==1) {
+			dateShow=replayDates[1];
+			this.calculateRepayment();
+			style_buts=[[styles.button_date_style],[styles.button_date_style,{marginLeft:w_margin,marginRight:w_margin},{backgroundColor:'#1a98ff'}],styles.button_date_style];
+			style_texts=[styles.text_style,[styles.text_style,{color:'white'}],styles.text_style];
+		}
+		else{
+			dateShow=replayDates[2];
+			this.calculateRepayment();
+			style_buts=[styles.button_date_style,[styles.button_date_style,{marginLeft:w_margin,marginRight:w_margin}],[styles.button_date_style,{backgroundColor:'#1a98ff'}]];
+			style_texts=[styles.text_style,styles.text_style,[styles.text_style,{color:'white'}]];
+		}
+	}
+}
+
+
+
+
+const styles = StyleSheet.create({
+    center:{
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+   
+   
+   
+    TopView_back:{
+      // backgroundColor: '#1a98ff',
+      height: Platform.OS == 'ios'?270:250,
+      width: Common.window.width,
+    },
+    TopImage:{
+      height: 60,
+      width: 60,
+      marginTop: 0,
+      marginLeft: Common.window.width/2-30,
+      borderRadius:30,
+      borderColor:'white',
+      borderWidth:2,
+    },
+    TopPhone_text:{
+      backgroundColor:'rgba(22.0, 114.0, 226.0, 0.0)',
+      textAlign: 'center',
+      fontSize: 14,
+      color: 'white',
+      marginTop:10,
+
+
+    },
+    TopName_text:{
+      backgroundColor:'rgba(22.0, 114.0, 226.0, 0.0)',
+      textAlign: 'center',
+      fontSize: 26,
+      color: 'white',
+      marginTop:20,
+
+
+    },
+    TopView_bottom:{
+
+      height:Platform.OS == 'ios'?130:130,
+      flexDirection: 'row',
+      alignItems: 'center'
+    },
+    TopBottom_child:{
+      width:(Common.window.width-20)/2,
+      height:70,
+      alignItems: 'center'
+    },
+    TopBottom_text:{
+      backgroundColor:'rgba(22.0, 114.0, 226.0, 0.0)',
+      color:'white',
+      fontSize: 14,
+      marginTop:10,
+      textAlign:'center',
+      width:(Common.window.width-20)/2,
+    },
+    TopImage_back:{
+     width: Common.window.width,
+     height: Platform.OS == 'ios'?160:140,
+     flexDirection: 'column',
+
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    text_style:{color:'#999999',textAlign:'center',fontSize:16},
+  	button_date_style:{justifyContent: 'center', alignItems: 'center',width:60,height:60,borderWidth:1,borderColor:'#999999',borderRadius:5},
+});

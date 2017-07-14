@@ -1,0 +1,113 @@
+{
+    "html": "<!DOCTYPE html><html><head lang='en'><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><meta http-equiv='X-UA-Compatible' content='IE=edge'> <style type='text/css'>* { margin: 0;padding: 0;box-sizing: border-box;}
+    body{
+        font:12px 'microsoft yahei',arial,Helvetica,sans-serif;
+        margin:0;
+        color:#666;
+        background: #fff;
+    }
+    a{
+        text-decoration:none;
+        color:#666;
+    }
+    a:hover{
+        text-decoration:underline;
+        color:#ff0700;
+    }
+    a:link,a:visited{
+        text-decoration:none;
+    }
+
+    ul,li,p,h1,h2,h3,h4,h5,h6,dl,dt,dd{
+        margin:0;
+        padding:0;
+        list-style:none;
+    }
+    .lf{float:left;}
+    .rt{float:right;}
+    /*****ҽ����Ƭ******/
+    .main_intro,.main_other{
+        overflow: hidden;
+    }
+    .main_intro{
+        width:70%;
+        padding-right:0.5rem;
+    }
+    .main_other{
+        width:30%;
+        /*margin-left:0.5rem;*/
+    }
+    .main_other li{
+        float:left;
+    }
+    .main_intro li{
+        float:right;
+    }
+    .doctor_card{
+        width:100%;
+        height:20rem;
+        padding:1.5rem 0;
+        position: relative;
+        background: #fff;
+    }
+    .name_title{
+        width:1.2rem;
+
+        font-size:0.8rem;
+        margin-left:0.8rem;
+        margin-top:2rem;
+        font-weight: 600;
+        /*-webkit-writing-mode: vertical-rl;*/
+    }
+    .name{
+        font-size:2rem;
+        width:2.4rem;
+        color: #333;
+        font-weight: 600;
+        text-align: center;
+        margin-left:0.3rem;
+
+    }
+    .doctor_intro{
+        width:1.2rem;
+        height: 18rem;
+        font-size:0.8rem;
+        -webkit-writing-mode: vertical-rl;
+        writing-mode: vertical-rl;
+    }
+    .doctor_introTitle,.work_title,.phone_title{
+        width:2rem;
+        font-size:1.1rem;
+        text-align: center;
+        font-weight: 600;
+    }
+    .doctor_introTitle,.phone_title{
+        border-right:1px solid #681A28;
+        /*padding-right:0.3rem;*/
+        margin-left:0.3rem;
+    }
+    .phone{
+        width:1.2rem;
+        font-size:0.8rem;
+        margin-left:0.6rem;
+        writing-mode: vertical-rl;
+        -webkit-writing-mode: vertical-rl;
+        -o-writing-mode: vertical-rl;
+        -moz-writing-mode: vertical-rl;
+        -safari-writing-mode: vertical-rl;
+    }
+    .work{
+        width:1.2rem;
+        font-size:0.8rem;
+        margin-left:0.6rem;
+    }
+
+    .doctor_card img{
+        position: absolute;
+        bottom: 1.5rem;
+        right:2rem;
+        border-radius: 50%;
+    }
+
+    </style></head><body><div class='doctor_card'><ul class='lf main_other'><li class='name_title'>中医医师</li><li class='name'>#name#</li></ul><ul class='rf main_intro'><li class='work_title'>工作单位</li><li class='work'>广州妇幼保健院</li><li class='phone_title'>手机号码</li><li class='phone'>15798543657</li><li class='doctor_introTitle'>个人介绍</li><li class='doctor_intro'>中医推拿、穴位按摩、针灸、按摩</li><li class='doctor_intro'>、刮痧、艾灸、中医理疗</li></ul>< img src='http://www.zhzyw.org/image/qij.jpg' alt=''/></div></body></html>"
+}

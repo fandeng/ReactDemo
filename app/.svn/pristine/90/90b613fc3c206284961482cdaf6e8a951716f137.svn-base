@@ -1,0 +1,135 @@
+//紧急联系人
+'use strict'
+import React, { Component } from 'react';
+import {
+    StyleSheet,
+    Text,
+    TextInput,
+    ScrollView,
+    View,
+    InteractionManager,
+} from 'react-native';
+
+import Common from '../common/common';
+import Style from '../style/style';
+
+let name;
+let phone;
+let address;
+let relation;
+
+class EmergencyContactContainer extends Component {
+    render() {
+      const {emcdata} = this.props;
+      const {isApply} = this.props;
+      console.log(emcdata);
+        return (
+          <View>
+              <ScrollView scrollEnabled={false} style={{backgroundColor:'#f0f1f2', height: 55*5,width:Common.window.width}}>
+                  <View style={{height:45,alignItems: 'center',justifyContent: 'center'}}>
+                       <Text style={Style.title_promte}>哗啦贷不会向联系人泄露您的借款信息，请放心填写</Text>
+                  </View>
+                  <View style={{height:55,alignItems: 'center',backgroundColor:'white'}}>
+                      <View style={{height:54,alignItems: 'center',flexDirection: 'row',backgroundColor:'white'}}>
+                          <Text style={[Style.mainBody,{marginLeft:10,height:20,marginTop:8,width:80}]}>姓名</Text>
+                          <TextInput
+                            style={Style.text_input}
+                            placeholder='请输入姓名'
+                            numberOfLines={1}
+                            autoFocus={false}
+                            textAlign='right'
+                            defaultValue = {isApply?null:emcdata.name}
+                            editable={isApply}
+                            underlineColorAndroid={'transparent'}
+                            onChangeText={(text) => {
+                                name = text;
+                                this._onPressFeedItem([name,phone,address,relation])
+                            }}
+                          />
+                    </View>
+                    <View style={{height:1,backgroundColor:'white'}}>
+                          <View style={{height:1,backgroundColor:'#f4f4f4',marginLeft:10,width:Common.window.width-10}}/>
+                    </View>
+                  </View>
+
+                  <View style={{height:55,alignItems: 'center',backgroundColor:'white'}}>
+                      <View style={{height:54,alignItems: 'center',flexDirection: 'row',backgroundColor:'white'}}>
+                          <Text style={[Style.mainBody,{marginLeft:10,height:20,marginTop:8,width:80}]}>电话</Text>
+                          <TextInput
+                            style={Style.text_input}
+                            placeholder='请输入电话'
+                            numberOfLines={1}
+                            autoFocus={false}
+                            textAlign='right'
+                            underlineColorAndroid={'transparent'}
+                            keyboardType = 'numeric'
+                            defaultValue = {isApply?null:emcdata.phone}
+                            editable={isApply}
+                            onChangeText={(text) => {
+                                phone = text;
+                                this._onPressFeedItem([name,phone,address,relation])
+                            }}
+                          />
+                    </View>
+                    <View style={{height:1,backgroundColor:'white'}}>
+                          <View style={{height:1,backgroundColor:'#f4f4f4',marginLeft:10,width:Common.window.width-10}}/>
+                    </View>
+                  </View>
+
+                  <View style={{height:55,alignItems: 'center',backgroundColor:'white'}}>
+                      <View style={{height:54,alignItems: 'center',flexDirection: 'row',backgroundColor:'white'}}>
+                          <Text style={[Style.mainBody,{marginLeft:10,height:20,marginTop:8,width:80}]}>住址</Text>
+                          <TextInput
+                            style={Style.text_input}
+                            placeholder='请输入住址'
+                            numberOfLines={1}
+                            autoFocus={false}
+                            textAlign='right'
+                            defaultValue = {isApply?null:emcdata.address}
+                            editable={isApply}
+                            underlineColorAndroid={'transparent'}
+                            onChangeText={(text) => {
+                                address = text;
+                                this._onPressFeedItem([name,phone,address,relation])
+                            }}
+                          />
+                    </View>
+                    <View style={{height:1,backgroundColor:'white'}}>
+                          <View style={{height:1,backgroundColor:'#f4f4f4',marginLeft:10,width:Common.window.width-10}}/>
+                    </View>
+                  </View>
+
+                  <View style={{height:55,alignItems: 'center',backgroundColor:'white'}}>
+                      <View style={{height:54,alignItems: 'center',flexDirection: 'row',backgroundColor:'white'}}>
+                          <Text style={[Style.mainBody,{marginLeft:10,height:20,marginTop:8,width:80}]}>关系</Text>
+                          <TextInput
+                            style={Style.text_input}
+                            placeholder='请输入关系'
+                            numberOfLines={1}
+                            autoFocus={false}
+                            textAlign='right'
+                            defaultValue = {isApply?null:emcdata.relation}
+                            editable={isApply}
+                            underlineColorAndroid={'transparent'}
+                            onChangeText={(text) => {
+                                relation = text;
+                                this._onPressFeedItem([name,phone,address,relation])
+                            }}
+                          />
+                    </View>
+                    <View style={{height:1,backgroundColor:'white'}}>
+                          <View style={{height:1,backgroundColor:'#f4f4f4',marginLeft:10,width:Common.window.width-10}}/>
+                    </View>
+                  </View>
+              </ScrollView>
+          </View>
+      );
+    }
+    //添加联系人点击事件
+    _onPressFeedItem(dataArray) {
+        this.props.callContactback(dataArray);
+    }
+}
+
+
+module.exports = EmergencyContactContainer;
