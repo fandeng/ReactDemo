@@ -4,8 +4,8 @@ var React = require('react-native');
 import Response from '../Data/Response.json';
 
 
-var API_BASE_URL = 'http://112.74.205.50/babylove-web/babylove';
-var API_BASE_UPLOAD_URL = "http://112.74.205.50/babylove-web/upFile.servlet";
+var API_BASE_URL = '请求';
+var API_BASE_UPLOAD_URL = "上传t";
 
 var isDemo= true;
 
